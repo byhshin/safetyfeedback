@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Safety Feedback</title>
+  <title>Safety Feedback1</title>
   <style>
     * {
       box-sizing: border-box;
@@ -298,26 +298,8 @@
   const form = document.getElementById("feedbackForm");
   const statusBox = document.getElementById("status");
   const submitBtn = document.getElementById("submitBtn");
-  const photoInput = document.getElementById("photo");
-  const preview = document.getElementById("preview");
 
-  const SCRIPT_URL = "여기에_앱스스크립트_웹앱_URL_넣기";
-
-  photoInput.addEventListener("change", function () {
-    const file = this.files[0];
-    if (!file) {
-      preview.style.display = "none";
-      preview.src = "";
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      preview.src = e.target.result;
-      preview.style.display = "block";
-    };
-    reader.readAsDataURL(file);
-  });
+  const SCRIPT_URL = "여기에_웹앱_URL_전체";
 
   function showStatus(message, type) {
     statusBox.textContent = message;
@@ -338,11 +320,6 @@
       return;
     }
 
-    if (SCRIPT_URL === "https://script.google.com/macros/s/AKfycbwdnQmzVxkH886m1GDk2dJpwWmoW6A7dUqVqg4WPw2gIaew5P75NXe7RmzkrT_pmBOs0Q/exec") {
-      showStatus("앱스 스크립트 URL을 아직 연결하지 않았습니다.", "error");
-      return;
-    }
-
     submitBtn.disabled = true;
     submitBtn.textContent = "제출 중...";
 
@@ -354,15 +331,19 @@
       formData.append("category", category);
       formData.append("content", content);
 
-      await fetch(SCRIPT_URL, {
+      const response = await fetch(SCRIPT_URL, {
         method: "POST",
         body: formData
       });
 
-      showStatus("정상적으로 접수되었습니다.", "success");
-      form.reset();
-      preview.style.display = "none";
-      preview.src = "";
+      const text = await response.text();
+
+      if (text.startsWith("OK")) {
+        showStatus("정상적으로 접수되었습니다.", "success");
+        form.reset();
+      } else {
+        showStatus("서버 응답 오류: " + text, "error");
+      }
     } catch (error) {
       showStatus("전송 실패: " + error.message, "error");
     } finally {
