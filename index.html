@@ -1,12 +1,385 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Safety Feedback</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    .wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 22px 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #e8f1ff;
+      color: #1d4ed8;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      color: #111827;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #6b7280;
+    }
+
+    .section-title {
+      margin: 22px 0 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .required {
+      color: #dc2626;
+    }
+
+    input[type="text"],
+    textarea,
+    select,
+    input[type="file"] {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 13px 14px;
+      font-size: 15px;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus,
+    input[type="file"]:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .guide {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .photo-box {
+      padding: 14px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+
+    .preview {
+      display: none;
+      margin-top: 12px;
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .actions {
+      margin-top: 24px;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 15px 16px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+      transition: background 0.2s, transform 0.05s;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    button:active {
+      transform: scale(0.99);
+    }
+
+    button:disabled {
+      background: #93c5fd;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .status.success {
+      display: block;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .status.error {
+      display: block;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 12px;
+      text-align: center;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 480px) {
+      .wrap {
+        padding: 14px 12px 28px;
+      }
+
+      .card {
+        padding: 18px 14px;
+        border-radius: 16px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
-<body style="font-family: Arial; text-align:center; padding:50px;">
-  <h1>안전의견청취</h1>
-  <p>QR로 접수된 의견이 여기에 연결됩니다.</p>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <div class="badge">Safety Feedback</div>
+        <h1>안전의견청취</h1>
+        <p class="subtitle">
+          작업 중 발견한 위험요인, 불편사항, 개선의견을 자유롭게 작성해 주세요.<br />
+          접수된 내용은 확인 후 검토 및 조치됩니다.
+        </p>
+      </div>
+
+      <form id="feedbackForm">
+        <div class="section-title">기본 정보</div>
+
+        <div class="field">
+          <label for="name">성명 <span class="required">*</span></label>
+          <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required />
+        </div>
+
+        <div class="field">
+          <label for="company">업체명</label>
+          <input type="text" id="company" name="company" placeholder="예: ○○건설 / 협력업체명" />
+        </div>
+
+        <div class="field">
+          <label for="location">위치 <span class="required">*</span></label>
+          <input type="text" id="location" name="location" placeholder="예: 1공구 A동 3층" required />
+        </div>
+
+        <div class="field">
+          <label for="category">구분</label>
+          <select id="category" name="category">
+            <option value="">선택하세요</option>
+            <option value="위험요인">위험요인</option>
+            <option value="개선의견">개선의견</option>
+            <option value="불안전행동">불안전행동</option>
+            <option value="불안전상태">불안전상태</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+
+        <div class="section-title">의견 내용</div>
+
+        <div class="field">
+          <label for="content">내용 <span class="required">*</span></label>
+          <textarea
+            id="content"
+            name="content"
+            placeholder="발견한 사항과 필요한 조치를 자세히 작성해 주세요."
+            required
+          ></textarea>
+          <div class="guide">
+            예) 통로에 자재가 적치되어 있어 이동 중 걸려 넘어질 우려가 있습니다. 정리 정돈 조치가 필요합니다.
+          </div>
+        </div>
+
+        <div class="section-title">사진 첨부</div>
+
+        <div class="field">
+          <label for="photo">사진 첨부 (선택)</label>
+          <div class="photo-box">
+            <input type="file" id="photo" name="photo" accept="image/*" />
+            <div class="guide">
+              현재 페이지에서는 사진 미리보기만 적용되어 있습니다.<br />
+              사진까지 저장하려면 나중에 Apps Script 드라이브 저장 기능을 추가하면 됩니다.
+            </div>
+            <img id="preview" class="preview" alt="미리보기 이미지" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="submitBtn">제출하기</button>
+          <div id="status" class="status"></div>
+        </div>
+      </form>
+
+      <div class="footer-note">
+        제출된 의견은 안전관리 담당자가 확인 후 검토합니다.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("feedbackForm");
+    const statusBox = document.getElementById("status");
+    const submitBtn = document.getElementById("submitBtn");
+    const photoInput = document.getElementById("photo");
+    const preview = document.getElementById("preview");
+
+    // 나중에 여기에 Apps Script 웹앱 URL 넣기
+    const SCRIPT_URL = "여기에_앱스스크립트_웹앱_URL_넣기";
+
+    photoInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (!file) {
+        preview.style.display = "none";
+        preview.src = "";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function showStatus(message, type) {
+      statusBox.textContent = message;
+      statusBox.className = "status " + type;
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const company = document.getElementById("company").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const category = document.getElementById("category").value;
+      const content = document.getElementById("content").value.trim();
+
+      if (!name || !location || !content) {
+        showStatus("필수 항목을 입력해 주세요.", "error");
+        return;
+      }
+
+      if (SCRIPT_URL === "여기에_앱스스크립트_웹앱_URL_넣기") {
+        showStatus("앱스 스크립트 URL을 아직 연결하지 않았습니다.", "error");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "제출 중...";
+
+      const payload = {
+        name,
+        company,
+        location,
+        category,
+        content,
+        createdAt: new Date().toLocaleString("ko-KR")
+      };
+
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.text();
+
+        if (response.ok) {
+          showStatus("정상적으로 접수되었습니다.", "success");
+          form.reset();
+          preview.style.display = "none";
+          preview.src = "";
+        } else {
+          showStatus("제출 중 오류가 발생했습니다: " + result, "error");
+        }
+      } catch (error) {
+        showStatus("전송 실패: " + error.message, "error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "제출하기";
+      }
+    });
+  </script>
 </body>
 </html>
