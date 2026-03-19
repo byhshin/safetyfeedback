@@ -294,95 +294,82 @@
     </div>
   </div>
 
-  <script>
-    const form = document.getElementById("feedbackForm");
-    const statusBox = document.getElementById("status");
-    const submitBtn = document.getElementById("submitBtn");
-    const photoInput = document.getElementById("photo");
-    const preview = document.getElementById("preview");
+<script>
+  const form = document.getElementById("feedbackForm");
+  const statusBox = document.getElementById("status");
+  const submitBtn = document.getElementById("submitBtn");
+  const photoInput = document.getElementById("photo");
+  const preview = document.getElementById("preview");
 
-    // 나중에 여기에 Apps Script 웹앱 URL 넣기
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCQlAHy2d1ELhGf0GYWVLCjr_Y-Wut8E_VrUHUqdG61F-2jaOMPnQgGfkxFBp5XhsolQ/exec";
+  const SCRIPT_URL = "여기에_앱스스크립트_웹앱_URL_넣기";
 
-    photoInput.addEventListener("change", function () {
-      const file = this.files[0];
-      if (!file) {
-        preview.style.display = "none";
-        preview.src = "";
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        preview.src = e.target.result;
-        preview.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    });
-
-    function showStatus(message, type) {
-      statusBox.textContent = message;
-      statusBox.className = "status " + type;
+  photoInput.addEventListener("change", function () {
+    const file = this.files[0];
+    if (!file) {
+      preview.style.display = "none";
+      preview.src = "";
+      return;
     }
 
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      preview.src = e.target.result;
+      preview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  });
 
-      const name = document.getElementById("name").value.trim();
-      const company = document.getElementById("company").value.trim();
-      const location = document.getElementById("location").value.trim();
-      const category = document.getElementById("category").value;
-      const content = document.getElementById("content").value.trim();
+  function showStatus(message, type) {
+    statusBox.textContent = message;
+    statusBox.className = "status " + type;
+  }
 
-      if (!name || !location || !content) {
-        showStatus("필수 항목을 입력해 주세요.", "error");
-        return;
-      }
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-      if (SCRIPT_URL === "여기에_앱스스크립트_웹앱_URL_넣기") {
-        showStatus("앱스 스크립트 URL을 아직 연결하지 않았습니다.", "error");
-        return;
-      }
+    const name = document.getElementById("name").value.trim();
+    const company = document.getElementById("company").value.trim();
+    const location = document.getElementById("location").value.trim();
+    const category = document.getElementById("category").value;
+    const content = document.getElementById("content").value.trim();
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = "제출 중...";
+    if (!name || !location || !content) {
+      showStatus("필수 항목을 입력해 주세요.", "error");
+      return;
+    }
 
-      const payload = {
-        name,
-        company,
-        location,
-        category,
-        content,
-        createdAt: new Date().toLocaleString("ko-KR")
-      };
+    if (SCRIPT_URL === "여기에_앱스스크립트_웹앱_URL_넣기") {
+      showStatus("앱스 스크립트 URL을 아직 연결하지 않았습니다.", "error");
+      return;
+    }
 
-      try {
-        const response = await fetch(SCRIPT_URL, {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
+    submitBtn.disabled = true;
+    submitBtn.textContent = "제출 중...";
 
-        const result = await response.text();
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("company", company);
+      formData.append("location", location);
+      formData.append("category", category);
+      formData.append("content", content);
 
-        if (response.ok) {
-          showStatus("정상적으로 접수되었습니다.", "success");
-          form.reset();
-          preview.style.display = "none";
-          preview.src = "";
-        } else {
-          showStatus("제출 중 오류가 발생했습니다: " + result, "error");
-        }
-      } catch (error) {
-        showStatus("전송 실패: " + error.message, "error");
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "제출하기";
-      }
-    });
-  </script>
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: formData
+      });
+
+      showStatus("정상적으로 접수되었습니다.", "success");
+      form.reset();
+      preview.style.display = "none";
+      preview.src = "";
+    } catch (error) {
+      showStatus("전송 실패: " + error.message, "error");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "제출하기";
+    }
+  });
+</script>
 </body>
 </html>
