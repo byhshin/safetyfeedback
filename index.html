@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>안전보건 의견 접수</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 20px;
@@ -16,38 +20,37 @@
     .wrap {
       max-width: 720px;
       margin: 0 auto;
-      background: #fff;
+      background: #ffffff;
       border-radius: 20px;
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     }
 
-    .topbar {
+    .lang-bar {
       display: flex;
-      justify-content: flex-start;
-      margin-bottom: 16px;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-bottom: 10px;
     }
 
-    .lang-select {
-      padding: 10px 12px;
+    .lang-btn {
+      font-size: 20px;
+      padding: 8px 12px;
       border: 1px solid #d1d5db;
       border-radius: 10px;
-      font-size: 14px;
-      background: #fff;
+      background: #ffffff;
+      cursor: pointer;
+      line-height: 1;
     }
 
-    .logo-box {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .logo-box img {
-      width: 160px;
-      max-width: 100%;
+    .lang-btn.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
     }
 
     h1 {
-      margin: 10px 0 8px;
+      margin: 0 0 10px;
       font-size: 24px;
       text-align: center;
     }
@@ -56,7 +59,8 @@
       text-align: center;
       color: #6b7280;
       margin-bottom: 24px;
-      line-height: 1.5;
+      line-height: 1.6;
+      font-size: 15px;
     }
 
     .field {
@@ -67,13 +71,12 @@
       display: block;
       margin-bottom: 8px;
       font-weight: 700;
+      font-size: 15px;
     }
 
     .field input,
-    .field textarea,
-    .field select {
+    .field textarea {
       width: 100%;
-      box-sizing: border-box;
       padding: 12px 14px;
       border: 1px solid #cbd5e1;
       border-radius: 12px;
@@ -86,32 +89,16 @@
       resize: vertical;
     }
 
-    .photo-box {
-      border: 1px dashed #cbd5e1;
-      border-radius: 14px;
-      padding: 16px;
-      background: #f9fafb;
-    }
-
-    .photo-btn {
-      display: inline-block;
-      padding: 10px 16px;
-      border-radius: 12px;
-      background: #e8f0ff;
-      color: #2563eb;
-      font-weight: 700;
-      cursor: pointer;
-      border: 1px solid #bfd3ff;
+    .field input[type="file"] {
+      padding: 10px;
+      background: #fff;
     }
 
     .photo-help {
-      margin-top: 10px;
+      margin-top: 8px;
       color: #6b7280;
       font-size: 13px;
-    }
-
-    #photo {
-      display: none;
+      line-height: 1.5;
     }
 
     .submit-btn {
@@ -124,11 +111,11 @@
       font-weight: 700;
       padding: 16px;
       cursor: pointer;
-      margin-top: 8px;
+      margin-top: 4px;
     }
 
     .submit-btn:disabled {
-      opacity: 0.6;
+      opacity: 0.65;
       cursor: default;
     }
 
@@ -137,7 +124,7 @@
       margin-top: 16px;
       color: #6b7280;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .bottom-logo {
@@ -147,18 +134,48 @@
 
     .bottom-logo img {
       width: 120px;
-      opacity: 0.75;
+      opacity: 0.8;
     }
 
     .status {
       margin-top: 14px;
       text-align: center;
       font-weight: 700;
+      min-height: 24px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+
+      .wrap {
+        padding: 18px;
+        border-radius: 16px;
+      }
+
+      h1 {
+        font-size: 21px;
+      }
+
+      .lang-btn {
+        font-size: 18px;
+        padding: 8px 10px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="lang-bar">
+      <button type="button" class="lang-btn" data-lang="ko" onclick="changeLang('ko')">🇰🇷</button>
+      <button type="button" class="lang-btn" data-lang="ja" onclick="changeLang('ja')">🇯🇵</button>
+      <button type="button" class="lang-btn" data-lang="en" onclick="changeLang('en')">🇺🇸</button>
+    </div>
+
     <h1 id="pageTitle">안전보건 의견 접수</h1>
+
     <div id="pageDesc" class="desc">
       현장의 위험요인, 개선의견, 안전 관련 제보를 자유롭게 작성해 주세요.
     </div>
@@ -185,10 +202,10 @@
       </div>
 
       <div class="field">
-        <label id="labelPhoto">사진 첨부</label>
-        <div class="photo-box">
-          <input id="photo" name="photo" type="file" accept="image/*">
-          <div id="photoHelp" class="photo-help">카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.</div>
+        <label id="labelPhoto" for="photo">사진 첨부 (선택)</label>
+        <input id="photo" name="photo" type="file" accept="image/*">
+        <div id="photoHelp" class="photo-help">
+          카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.
         </div>
       </div>
 
@@ -207,6 +224,8 @@
   </div>
 
   <script>
+    const WEB_APP_URL = "YOUR_WEB_APP_URL";
+
     const i18n = {
       ko: {
         pageTitle: "안전보건 의견 접수",
@@ -225,13 +244,6 @@
           location: "위치를 입력하세요",
           content: "내용을 입력하세요"
         },
-        categoryOptions: [
-          { value: "", text: "선택" },
-          { value: "위험요인", text: "위험요인" },
-          { value: "개선의견", text: "개선의견" },
-          { value: "불안전행동", text: "불안전행동" },
-          { value: "기타", text: "기타" }
-        ],
         alerts: {
           required: "위치와 내용은 필수 입력입니다.",
           submitting: "접수 중입니다...",
@@ -239,7 +251,6 @@
           fail: "접수 중 오류가 발생했습니다."
         }
       },
-
       ja: {
         pageTitle: "安全衛生ご意見受付",
         pageDesc: "現場の危険要因、改善提案、安全に関する内容を自由にご記入ください。",
@@ -248,7 +259,6 @@
         labelLocation: "場所",
         labelContent: "内容",
         labelPhoto: "写真添付（任意）",
-        photoBtnText: "写真を選択",
         photoHelp: "カメラ撮影またはアルバムの写真を添付できます。",
         submitBtn: "送信する",
         bottomNote: "提出された内容は安全管理担当者が確認し、検討します。",
@@ -258,13 +268,6 @@
           location: "場所を入力してください",
           content: "内容を入力してください"
         },
-        categoryOptions: [
-          { value: "", text: "選択" },
-          { value: "위험요인", text: "危険要因" },
-          { value: "개선의견", text: "改善提案" },
-          { value: "불안전행동", text: "不安全行動" },
-          { value: "기타", text: "その他" }
-        ],
         alerts: {
           required: "場所と内容は必須です。",
           submitting: "送信中です...",
@@ -272,7 +275,6 @@
           fail: "送信中にエラーが発生しました。"
         }
       },
-
       en: {
         pageTitle: "Safety Feedback Submission",
         pageDesc: "Please freely submit hazards, improvement suggestions, and safety-related feedback from the site.",
@@ -281,7 +283,6 @@
         labelLocation: "Location",
         labelContent: "Details",
         labelPhoto: "Attach Photo (Optional)",
-        photoBtnText: "Choose Photo",
         photoHelp: "You can attach a photo from the camera or album.",
         submitBtn: "Submit",
         bottomNote: "Submitted feedback will be reviewed by the safety manager.",
@@ -291,13 +292,6 @@
           location: "Enter location",
           content: "Enter details"
         },
-        categoryOptions: [
-          { value: "", text: "Select" },
-          { value: "위험요인", text: "Hazard" },
-          { value: "개선의견", text: "Improvement Suggestion" },
-          { value: "불안전행동", text: "Unsafe Act" },
-          { value: "기타", text: "Other" }
-        ],
         alerts: {
           required: "Location and details are required.",
           submitting: "Submitting...",
@@ -318,7 +312,6 @@
       document.getElementById("labelLocation").textContent = t.labelLocation;
       document.getElementById("labelContent").textContent = t.labelContent;
       document.getElementById("labelPhoto").textContent = t.labelPhoto;
-      document.getElementById("photoBtnText").textContent = t.photoBtnText;
       document.getElementById("photoHelp").textContent = t.photoHelp;
       document.getElementById("submitBtn").textContent = t.submitBtn;
       document.getElementById("bottomNote").textContent = t.bottomNote;
@@ -327,37 +320,31 @@
       document.getElementById("company").placeholder = t.placeholders.company;
       document.getElementById("location").placeholder = t.placeholders.location;
       document.getElementById("content").placeholder = t.placeholders.content;
-
-
-      t.categoryOptions.forEach(item => {
-        const option = document.createElement("option");
-        option.value = item.value;
-        option.textContent = item.text;
-        category.appendChild(option);
-      });
-
-      if ([...category.options].some(opt => opt.value === currentValue)) {
-        category.value = currentValue;
-      }
     }
 
-    document.getElementById("langSelect").addEventListener("change", function () {
-      const lang = this.value;
+    function updateLangButtons(lang) {
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+    }
+
+    function changeLang(lang) {
       localStorage.setItem("feedback_lang", lang);
       applyLanguage(lang);
-    });
+      updateLangButtons(lang);
+    }
 
     window.addEventListener("load", function () {
       const savedLang = localStorage.getItem("feedback_lang") || "ko";
-      document.getElementById("langSelect").value = savedLang;
       applyLanguage(savedLang);
+      updateLangButtons(savedLang);
     });
 
     document.getElementById("feedbackForm").addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      const lang = document.getElementById("langSelect").value || "ko";
-      const t = i18n[lang];
+      const lang = localStorage.getItem("feedback_lang") || "ko";
+      const t = i18n[lang] || i18n.ko;
       const status = document.getElementById("status");
       const submitBtn = document.getElementById("submitBtn");
 
@@ -388,7 +375,7 @@
           formData.append("photoDataUrl", photoDataUrl);
         }
 
-        const response = await fetch("여기에_웹앱_URL", {
+        const response = await fetch(WEB_APP_URL, {
           method: "POST",
           body: formData
         });
@@ -398,8 +385,6 @@
         if (result.success) {
           status.textContent = t.alerts.success;
           this.reset();
-          document.getElementById("langSelect").value = lang;
-          applyLanguage(lang);
         } else {
           status.textContent = result.message || t.alerts.fail;
         }
