@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Safety Feedback1</title>
+  <title>안전 의견 접수</title>
   <style>
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -83,22 +84,22 @@
 
     input[type="text"],
     textarea,
-    select,
-    input[type="file"] {
+    select {
       width: 100%;
       border: 1px solid #d1d5db;
       border-radius: 12px;
       padding: 13px 14px;
-      font-size: 15px;
+      font-size: 16px;
       background: #fff;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
     }
 
     input[type="text"]:focus,
     textarea:focus,
-    select:focus,
-    input[type="file"]:focus {
+    select:focus {
       border-color: #2563eb;
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
     }
@@ -123,12 +124,52 @@
       background: #f8fafc;
     }
 
-    .preview {
+    .file-input {
+      display: none;
+    }
+
+    .file-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 12px;
+      background: #e8f1ff;
+      color: #1d4ed8;
+      border: 1px solid #c7dbff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .file-name {
+      display: none;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #374151;
+      word-break: break-all;
+    }
+
+    .compress-info {
+      display: none;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+
+    .preview-wrap {
       display: none;
       margin-top: 12px;
+    }
+
+    .preview {
+      display: block;
       width: 100%;
       border-radius: 12px;
       border: 1px solid #e5e7eb;
+      background: #fff;
     }
 
     .actions {
@@ -168,6 +209,8 @@
       font-size: 14px;
       display: none;
       line-height: 1.5;
+      white-space: pre-line;
+      word-break: break-word;
     }
 
     .status.success {
@@ -192,6 +235,14 @@
       line-height: 1.6;
     }
 
+    .hidden-trap {
+      position: absolute !important;
+      left: -9999px !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+    }
+
     @media (max-width: 480px) {
       .wrap {
         padding: 14px 12px 28px;
@@ -205,6 +256,19 @@
       h1 {
         font-size: 24px;
       }
+
+      .subtitle {
+        font-size: 13px;
+      }
+
+      .section-title {
+        margin-top: 18px;
+        font-size: 15px;
+      }
+
+      textarea {
+        min-height: 120px;
+      }
     }
   </style>
 </head>
@@ -213,29 +277,34 @@
     <div class="card">
       <div class="header">
         <div class="badge">Safety Feedback</div>
-        <h1>안전의견청취</h1>
+        <h1>안전 의견 접수</h1>
         <p class="subtitle">
           작업 중 발견한 위험요인, 불편사항, 개선의견을 자유롭게 작성해 주세요.<br />
           접수된 내용은 확인 후 검토 및 조치됩니다.
         </p>
       </div>
 
-      <form id="feedbackForm">
+      <form id="reportForm">
+        <div class="hidden-trap" aria-hidden="true">
+          <label for="website">Leave this field empty</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
         <div class="section-title">기본 정보</div>
 
         <div class="field">
           <label for="name">성명 <span class="required">*</span></label>
-          <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required />
+          <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required maxlength="30" />
         </div>
 
         <div class="field">
           <label for="company">업체명</label>
-          <input type="text" id="company" name="company" placeholder="예: ○○건설 / 협력업체명" />
+          <input type="text" id="company" name="company" placeholder="예: ○○건설 / 협력업체명" maxlength="50" />
         </div>
 
         <div class="field">
           <label for="location">위치 <span class="required">*</span></label>
-          <input type="text" id="location" name="location" placeholder="예: 1공구 A동 3층" required />
+          <input type="text" id="location" name="location" placeholder="예: 1공구 A동 3층" required maxlength="100" />
         </div>
 
         <div class="field">
@@ -259,6 +328,7 @@
             name="content"
             placeholder="발견한 사항과 필요한 조치를 자세히 작성해 주세요."
             required
+            maxlength="2000"
           ></textarea>
           <div class="guide">
             예) 통로에 자재가 적치되어 있어 이동 중 걸려 넘어질 우려가 있습니다. 정리 정돈 조치가 필요합니다.
@@ -270,17 +340,20 @@
         <div class="field">
           <label for="photo">사진 첨부 (선택)</label>
           <div class="photo-box">
-            <input type="file" id="photo" name="photo" accept="image/*" />
-            <div class="guide">
-              현재 페이지에서는 사진 미리보기만 적용되어 있습니다.<br />
-              사진까지 저장하려면 나중에 Apps Script 드라이브 저장 기능을 추가하면 됩니다.
+            <label class="file-btn" for="photo">사진 선택</label>
+            <input type="file" id="photo" name="photo" class="file-input" accept="image/*" />
+            <div class="file-name" id="fileName"></div>
+            <div class="guide">카메라 촬영 또는 앨범의 사진을 선택할 수 있습니다.</div>
+            <div class="compress-info" id="compressInfo"></div>
+
+            <div class="preview-wrap" id="previewBox">
+              <img id="previewImg" class="preview" alt="미리보기 이미지" />
             </div>
-            <img id="preview" class="preview" alt="미리보기 이미지" />
           </div>
         </div>
 
         <div class="actions">
-          <button type="submit" id="submitBtn">제출하기</button>
+          <button type="submit" id="submitBtn">접수하기</button>
           <div id="status" class="status"></div>
         </div>
       </form>
@@ -288,69 +361,247 @@
       <div class="footer-note">
         제출된 의견은 안전관리 담당자가 확인 후 검토합니다.
       </div>
-      <div style="text-align:center; margin-top:16px;">
-        <img src="logo.png" alt="회사 로고" style="height:40px; opacity:0.8;">
-      </div>
     </div>
   </div>
 
-<script>
-  const form = document.getElementById("feedbackForm");
-  const statusBox = document.getElementById("status");
-  const submitBtn = document.getElementById("submitBtn");
+  <script>
+    const form = document.getElementById("reportForm");
+    const statusBox = document.getElementById("status");
+    const submitBtn = document.getElementById("submitBtn");
+    const photoInput = document.getElementById("photo");
+    const previewBox = document.getElementById("previewBox");
+    const previewImg = document.getElementById("previewImg");
+    const compressInfo = document.getElementById("compressInfo");
+    const fileName = document.getElementById("fileName");
 
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdnQmzVxkH886m1GDk2dJpwWmoW6A7dUqVqg4WPw2gIaew5P75NXe7RmzkrT_pmBOs0Q/exec";
+    // 여기에 배포된 Apps Script /exec 주소 넣기
+    const SCRIPT_URL = "여기에_앱스크립트_exec_URL";
 
-  function showStatus(message, type) {
-    statusBox.textContent = message;
-    statusBox.className = "status " + type;
-  }
+    let compressedPhotoDataUrl = "";
+    let compressedPhotoName = "";
 
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-    const company = document.getElementById("company").value.trim();
-    const location = document.getElementById("location").value.trim();
-    const category = document.getElementById("category").value;
-    const content = document.getElementById("content").value.trim();
-
-    if (!name || !location || !content) {
-      showStatus("필수 항목을 입력해 주세요.", "error");
-      return;
+    function showStatus(message, type) {
+      statusBox.textContent = message;
+      statusBox.className = "status " + type;
     }
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = "제출 중...";
-
-    try {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("company", company);
-      formData.append("location", location);
-      formData.append("category", category);
-      formData.append("content", content);
-
-      const response = await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: formData
-      });
-
-      const text = await response.text();
-
-      if (text.startsWith("OK")) {
-        showStatus("정상적으로 접수되었습니다.", "success");
-        form.reset();
-      } else {
-        showStatus("서버 응답 오류: " + text, "error");
+    function formatBytes(bytes) {
+      if (!bytes && bytes !== 0) return "";
+      const units = ["B", "KB", "MB", "GB"];
+      let i = 0;
+      let value = bytes;
+      while (value >= 1024 && i < units.length - 1) {
+        value /= 1024;
+        i++;
       }
-    } catch (error) {
-      showStatus("전송 실패: " + error.message, "error");
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = "제출하기";
+      return `${value.toFixed(value >= 10 || i === 0 ? 0 : 1)} ${units[i]}`;
     }
-  });
-</script>
+
+    function toJpgName(name) {
+      const base = (name || "photo").replace(/\.[^/.]+$/, "");
+      return `${base}.jpg`;
+    }
+
+    function readFileAsDataURL(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.onerror = () => reject(new Error("파일을 읽지 못했습니다."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function readBlobAsDataURL(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.onerror = () => reject(new Error("압축 이미지를 읽지 못했습니다."));
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error("이미지를 불러오지 못했습니다."));
+        img.src = src;
+      });
+    }
+
+    function canvasToBlob(canvas, type, quality) {
+      return new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error("이미지 압축에 실패했습니다."));
+            return;
+          }
+          resolve(blob);
+        }, type, quality);
+      });
+    }
+
+    async function compressImageToTarget(file, options = {}) {
+      const {
+        maxWidth = 1280,
+        maxHeight = 1280,
+        targetMaxBytes = 500 * 1024,
+        minQuality = 0.5,
+        startQuality = 0.8
+      } = options;
+
+      const originalDataUrl = await readFileAsDataURL(file);
+      const img = await loadImage(originalDataUrl);
+
+      const ratio = Math.min(1, maxWidth / img.width || 1, maxHeight / img.height || 1);
+      const targetWidth = Math.round(img.width * ratio);
+      const targetHeight = Math.round(img.height * ratio);
+
+      const canvas = document.createElement("canvas");
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+      let quality = startQuality;
+      let blob = await canvasToBlob(canvas, "image/jpeg", quality);
+
+      while (blob.size > targetMaxBytes && quality > minQuality) {
+        quality = Math.max(quality - 0.1, minQuality);
+        blob = await canvasToBlob(canvas, "image/jpeg", quality);
+        if (quality === minQuality) break;
+      }
+
+      return {
+        blob,
+        dataUrl: await readBlobAsDataURL(blob)
+      };
+    }
+
+    photoInput.addEventListener("change", async () => {
+      const file = photoInput.files[0];
+
+      compressedPhotoDataUrl = "";
+      compressedPhotoName = "";
+      previewBox.style.display = "none";
+      previewImg.src = "";
+      compressInfo.style.display = "none";
+      compressInfo.textContent = "";
+      fileName.style.display = "none";
+      fileName.textContent = "";
+
+      if (!file) return;
+
+      try {
+        fileName.textContent = `선택된 파일: ${file.name}`;
+        fileName.style.display = "block";
+
+        if (!file.type.startsWith("image/")) {
+          throw new Error("이미지 파일만 첨부할 수 있습니다.");
+        }
+
+        if (file.size > 10 * 1024 * 1024) {
+          throw new Error("사진은 10MB 이하만 업로드 가능합니다.");
+        }
+
+        const compressed = await compressImageToTarget(file, {
+          maxWidth: 1280,
+          maxHeight: 1280,
+          targetMaxBytes: 500 * 1024,
+          minQuality: 0.5,
+          startQuality: 0.8
+        });
+
+        compressedPhotoDataUrl = compressed.dataUrl;
+        compressedPhotoName = toJpgName(file.name);
+
+        previewImg.src = compressed.dataUrl;
+        previewBox.style.display = "block";
+
+        compressInfo.textContent = `압축 완료: ${formatBytes(file.size)} → ${formatBytes(compressed.blob.size)}`;
+        compressInfo.style.display = "block";
+      } catch (error) {
+        showStatus(error.message, "error");
+      }
+    });
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      showStatus("", "");
+      
+      const lastSubmit = Number(localStorage.getItem("safety_feedback_last_submit") || "0");
+      const now = Date.now();
+      if (now - lastSubmit < 15000) {
+        showStatus("연속 제출은 15초 후 다시 시도해 주세요.", "error");
+        return;
+      }
+
+      const payload = {
+        name: document.getElementById("name").value.trim(),
+        company: document.getElementById("company").value.trim(),
+        location: document.getElementById("location").value.trim(),
+        category: document.getElementById("category").value,
+        content: document.getElementById("content").value.trim(),
+        website: document.getElementById("website").value.trim(),
+        photoName: "",
+        photoDataUrl: ""
+      };
+
+      if (!payload.name || !payload.location || !payload.content) {
+        showStatus("필수 항목을 입력해 주세요.", "error");
+        return;
+      }
+
+      if (payload.website) {
+        showStatus("비정상 요청이 감지되었습니다.", "error");
+        return;
+      }
+
+      if (compressedPhotoDataUrl) {
+        payload.photoName = compressedPhotoName;
+        payload.photoDataUrl = compressedPhotoDataUrl;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "접수 중...";
+
+      try {
+        const formData = new FormData();
+        Object.entries(payload).forEach(([key, value]) => {
+          formData.append(key, value || "");
+        });
+
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          localStorage.setItem("safety_feedback_last_submit", String(now));
+          showStatus(`정상적으로 접수되었습니다.\n접수ID: ${result.receiptId}`, "success");
+          form.reset();
+          previewBox.style.display = "none";
+          previewImg.src = "";
+          compressInfo.style.display = "none";
+          compressInfo.textContent = "";
+          fileName.style.display = "none";
+          fileName.textContent = "";
+          compressedPhotoDataUrl = "";
+          compressedPhotoName = "";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          showStatus(result.message || "서버 응답 오류가 발생했습니다.", "error");
+        }
+      } catch (error) {
+        showStatus("전송 실패: " + error.message, "error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "접수하기";
+      }
+    });
+  </script>
 </body>
 </html>
