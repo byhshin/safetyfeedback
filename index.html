@@ -1,560 +1,409 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>안전 의견 접수</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>안전보건 의견 접수</title>
   <style>
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
     body {
       margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #f4f7fb;
-      color: #1f2937;
+      padding: 20px;
+      background: #f3f4f6;
+      font-family: Arial, "Malgun Gothic", sans-serif;
+      color: #111827;
     }
 
     .wrap {
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto;
-      padding: 20px 16px 40px;
+      background: #fff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
-    .card {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 22px 18px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    .topbar {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 16px;
     }
 
-    .header {
+    .lang-select {
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    .logo-box {
       text-align: center;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
-    .badge {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: #e8f1ff;
-      color: #1d4ed8;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 12px;
+    .logo-box img {
+      width: 160px;
+      max-width: 100%;
     }
 
     h1 {
-      margin: 0 0 8px;
-      font-size: 28px;
-      color: #111827;
+      margin: 10px 0 8px;
+      font-size: 24px;
+      text-align: center;
     }
 
-    .subtitle {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.6;
+    .desc {
+      text-align: center;
       color: #6b7280;
-    }
-
-    .section-title {
-      margin: 22px 0 10px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #111827;
+      margin-bottom: 24px;
+      line-height: 1.5;
     }
 
     .field {
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
-    label {
+    .field label {
       display: block;
-      margin-bottom: 7px;
-      font-size: 14px;
+      margin-bottom: 8px;
       font-weight: 700;
-      color: #374151;
     }
 
-    .required {
-      color: #dc2626;
-    }
-
-    input[type="text"],
-    textarea {
+    .field input,
+    .field textarea,
+    .field select {
       width: 100%;
-      border: 1px solid #d1d5db;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
       border-radius: 12px;
-      padding: 13px 14px;
-      font-size: 16px;
+      font-size: 15px;
       background: #fff;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      appearance: none;
-      -webkit-appearance: none;
     }
 
-    input[type="text"]:focus,
-    textarea:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-    }
-
-    textarea {
-      min-height: 140px;
+    .field textarea {
+      min-height: 120px;
       resize: vertical;
-      line-height: 1.5;
-    }
-
-    .guide {
-      font-size: 12px;
-      color: #6b7280;
-      margin-top: 6px;
-      line-height: 1.5;
     }
 
     .photo-box {
-      padding: 14px;
       border: 1px dashed #cbd5e1;
-      border-radius: 12px;
-      background: #f8fafc;
+      border-radius: 14px;
+      padding: 16px;
+      background: #f9fafb;
     }
 
-    .file-input {
-      display: none;
-    }
-
-    .file-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 0 16px;
+    .photo-btn {
+      display: inline-block;
+      padding: 10px 16px;
       border-radius: 12px;
-      background: #e8f1ff;
-      color: #1d4ed8;
-      border: 1px solid #c7dbff;
-      font-size: 14px;
+      background: #e8f0ff;
+      color: #2563eb;
       font-weight: 700;
       cursor: pointer;
+      border: 1px solid #bfd3ff;
     }
 
-    .file-name {
-      display: none;
+    .photo-help {
       margin-top: 10px;
+      color: #6b7280;
       font-size: 13px;
-      color: #374151;
-      word-break: break-all;
     }
 
-    .compress-info {
+    #photo {
       display: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 16px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 16px;
+      cursor: pointer;
       margin-top: 8px;
-      font-size: 12px;
-      color: #4b5563;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .bottom-note {
+      text-align: center;
+      margin-top: 16px;
+      color: #6b7280;
+      font-size: 14px;
       line-height: 1.5;
     }
 
-    .preview-wrap {
-      display: none;
+    .bottom-logo {
+      text-align: center;
       margin-top: 12px;
     }
 
-    .preview {
-      display: block;
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      background: #fff;
-    }
-
-    .actions {
-      margin-top: 24px;
-    }
-
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 14px;
-      padding: 15px 16px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      background: #2563eb;
-      color: white;
-      transition: background 0.2s, transform 0.05s;
-    }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    button:active {
-      transform: scale(0.99);
-    }
-
-    button:disabled {
-      background: #93c5fd;
-      cursor: not-allowed;
+    .bottom-logo img {
+      width: 120px;
+      opacity: 0.75;
     }
 
     .status {
       margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-size: 14px;
-      display: none;
-      line-height: 1.5;
-      white-space: pre-line;
-      word-break: break-word;
-    }
-
-    .status.success {
-      display: block;
-      background: #ecfdf5;
-      color: #065f46;
-      border: 1px solid #a7f3d0;
-    }
-
-    .status.error {
-      display: block;
-      background: #fef2f2;
-      color: #991b1b;
-      border: 1px solid #fecaca;
-    }
-
-    .footer-note {
-      margin-top: 16px;
-      font-size: 12px;
       text-align: center;
-      color: #6b7280;
-      line-height: 1.6;
-    }
-
-    .hidden-trap {
-      position: absolute !important;
-      left: -9999px !important;
-      width: 1px !important;
-      height: 1px !important;
-      overflow: hidden !important;
-    }
-
-    @media (max-width: 480px) {
-      .wrap {
-        padding: 14px 12px 28px;
-      }
-
-      .card {
-        padding: 18px 14px;
-        border-radius: 16px;
-      }
-
-      h1 {
-        font-size: 24px;
-      }
-
-      .subtitle {
-        font-size: 13px;
-      }
-
-      .section-title {
-        margin-top: 18px;
-        font-size: 15px;
-      }
-
-      textarea {
-        min-height: 120px;
-      }
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="card">
-      <div class="header">
-        <div class="badge">Safety Feedback</div>
-        <h1>안전 의견 접수</h1>
-        <p class="subtitle">
-          작업 중 발견한 위험요인, 불편사항, 개선의견을 자유롭게 작성해 주세요.<br />
-          접수된 내용은 확인 후 검토 및 조치됩니다.
-        </p>
+    <div class="topbar">
+      <select id="langSelect" class="lang-select">
+        <option value="ko">🇰🇷 한국어</option>
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="en">🇺🇸 English</option>
+      </select>
+    </div>
+
+    <div class="logo-box">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/logo.png" alt="logo">
+    </div>
+
+    <h1 id="pageTitle">안전보건 의견 접수</h1>
+    <div id="pageDesc" class="desc">
+      현장의 위험요인, 개선의견, 안전 관련 제보를 자유롭게 작성해 주세요.
+    </div>
+
+    <form id="feedbackForm">
+      <div class="field">
+        <label id="labelName" for="name">성명</label>
+        <input id="name" name="name" type="text">
       </div>
 
-      <form id="reportForm">
-        <div class="hidden-trap" aria-hidden="true">
-          <label for="website">Leave this field empty</label>
-          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+      <div class="field">
+        <label id="labelCompany" for="company">업체명</label>
+        <input id="company" name="company" type="text">
+      </div>
+
+      <div class="field">
+        <label id="labelLocation" for="location">위치</label>
+        <input id="location" name="location" type="text" required>
+      </div>
+
+      <div class="field">
+        <label id="labelContent" for="content">내용</label>
+        <textarea id="content" name="content" required></textarea>
+      </div>
+
+      <div class="field">
+        <label id="labelPhoto">사진 첨부 (선택)</label>
+        <div class="photo-box">
+          <label id="photoBtnText" for="photo" class="photo-btn">사진 선택</label>
+          <input id="photo" name="photo" type="file" accept="image/*">
+          <div id="photoHelp" class="photo-help">카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.</div>
         </div>
+      </div>
 
-        <div class="section-title">기본 정보</div>
+      <button id="submitBtn" class="submit-btn" type="submit">접수하기</button>
 
-        <div class="field">
-          <label for="name">성명 <span class="required">*</span></label>
-          <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required maxlength="30" />
-        </div>
-
-        <div class="field">
-          <label for="company">업체명</label>
-          <input type="text" id="company" name="company" placeholder="예: 유영 연승 / 협력업체명" maxlength="50" />
-        </div>
-
-        <div class="field">
-          <label for="location">위치 <span class="required">*</span></label>
-          <input type="text" id="location" name="location" placeholder="예: 도장동/PE장/조립" required maxlength="100" />
-        </div>
-
-        <div class="section-title">의견 내용</div>
-
-        <div class="field">
-          <label for="content">내용 <span class="required">*</span></label>
-          <textarea
-            id="content"
-            name="content"
-            placeholder="발견한 사항과 필요한 조치를 자세히 작성해 주세요."
-            required
-            maxlength="2000"
-          ></textarea>
-          <div class="guide">
-            예) 통로에 자재가 적치되어 있어 이동 중 걸려 넘어질 우려가 있습니다. 정리 정돈 조치가 필요합니다.
-          </div>
-        </div>
-
-        <div class="section-title">사진 첨부</div>
-
-        <div class="field">
-          <div class="photo-box">
-            <label class="file-btn" for="photo">사진 선택</label>
-            <input type="file" id="photo" name="photo" class="file-input" accept="image/*" />
-            <div class="file-name" id="fileName"></div>
-            <div class="guide">카메라 촬영 또는 앨범의 사진을 선택할 수 있습니다.</div>
-            <div class="compress-info" id="compressInfo"></div>
-
-            <div class="preview-wrap" id="previewBox">
-              <img id="previewImg" class="preview" alt="미리보기 이미지" />
-            </div>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button type="submit" id="submitBtn">접수하기</button>
-          <div id="status" class="status"></div>
-        </div>
-      </form>
-
-      <div class="footer-note">
+      <div id="bottomNote" class="bottom-note">
         제출된 의견은 안전관리 담당자가 확인 후 검토합니다.
       </div>
-      
-      <div style="text-align:center; margin-top:10px;">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/logo.png"
-       style="width:140px; opacity:0.8;">
-</div>
-    </div>
+
+      <div class="bottom-logo">
+        <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/logo.png" alt="logo">
+      </div>
+
+      <div id="status" class="status"></div>
+    </form>
   </div>
 
   <script>
-    const form = document.getElementById("reportForm");
-    const statusBox = document.getElementById("status");
-    const submitBtn = document.getElementById("submitBtn");
-    const photoInput = document.getElementById("photo");
-    const previewBox = document.getElementById("previewBox");
-    const previewImg = document.getElementById("previewImg");
-    const compressInfo = document.getElementById("compressInfo");
-    const fileName = document.getElementById("fileName");
-
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHJuhC-Jt-9wO-TNN_THnQIcCISCJx_S6uf4DmKaPuZP_sIdC03DCtmHHCkoYxjwCGqg/exec";
-
-    let compressedPhotoDataUrl = "";
-    let compressedPhotoName = "";
-
-    function showStatus(message, type) {
-      statusBox.textContent = message;
-      statusBox.className = "status " + type;
-    }
-
-    function formatBytes(bytes) {
-      if (!bytes && bytes !== 0) return "";
-      const units = ["B", "KB", "MB", "GB"];
-      let i = 0;
-      let value = bytes;
-      while (value >= 1024 && i < units.length - 1) {
-        value /= 1024;
-        i++;
-      }
-      return `${value.toFixed(value >= 10 || i === 0 ? 0 : 1)} ${units[i]}`;
-    }
-
-    function toJpgName(name) {
-      const base = (name || "photo").replace(/\.[^/.]+$/, "");
-      return `${base}.jpg`;
-    }
-
-    function readFileAsDataURL(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result);
-        reader.onerror = () => reject(new Error("파일을 읽지 못했습니다."));
-        reader.readAsDataURL(file);
-      });
-    }
-
-    function readBlobAsDataURL(blob) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result);
-        reader.onerror = () => reject(new Error("압축 이미지를 읽지 못했습니다."));
-        reader.readAsDataURL(blob);
-      });
-    }
-
-    function loadImage(src) {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error("이미지를 불러오지 못했습니다."));
-        img.src = src;
-      });
-    }
-
-    function canvasToBlob(canvas, type, quality) {
-      return new Promise((resolve, reject) => {
-        canvas.toBlob((blob) => {
-          if (!blob) {
-            reject(new Error("이미지 압축에 실패했습니다."));
-            return;
-          }
-          resolve(blob);
-        }, type, quality);
-      });
-    }
-
-    async function compressImageToTarget(file, options = {}) {
-      const {
-        maxWidth = 1000,
-        maxHeight = 1000,
-        targetMaxBytes = 300 * 1024,
-        minQuality = 0.45,
-        startQuality = 0.75
-      } = options;
-
-      const originalDataUrl = await readFileAsDataURL(file);
-      const img = await loadImage(originalDataUrl);
-
-      const ratio = Math.min(1, maxWidth / img.width || 1, maxHeight / img.height || 1);
-      const targetWidth = Math.round(img.width * ratio);
-      const targetHeight = Math.round(img.height * ratio);
-
-      const canvas = document.createElement("canvas");
-      canvas.width = targetWidth;
-      canvas.height = targetHeight;
-
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
-
-      let quality = startQuality;
-      let blob = await canvasToBlob(canvas, "image/jpeg", quality);
-
-      while (blob.size > targetMaxBytes && quality > minQuality) {
-        quality = Math.max(quality - 0.1, minQuality);
-        blob = await canvasToBlob(canvas, "image/jpeg", quality);
-        if (quality === minQuality) break;
-      }
-
-      return {
-        blob,
-        dataUrl: await readBlobAsDataURL(blob)
-      };
-    }
-
-    photoInput.addEventListener("change", async () => {
-      const file = photoInput.files[0];
-
-      compressedPhotoDataUrl = "";
-      compressedPhotoName = "";
-      previewBox.style.display = "none";
-      previewImg.src = "";
-      compressInfo.style.display = "none";
-      compressInfo.textContent = "";
-      fileName.style.display = "none";
-      fileName.textContent = "";
-
-      if (!file) return;
-
-      try {
-        fileName.textContent = `선택된 파일: ${file.name}`;
-        fileName.style.display = "block";
-
-        if (!file.type.startsWith("image/")) {
-          throw new Error("이미지 파일만 첨부할 수 있습니다.");
+    const i18n = {
+      ko: {
+        pageTitle: "안전보건 의견 접수",
+        pageDesc: "현장의 위험요인, 개선의견, 안전 관련 제보를 자유롭게 작성해 주세요.",
+        labelName: "성명",
+        labelCompany: "업체명",
+        labelLocation: "위치",
+        labelContent: "내용",
+        labelPhoto: "사진 첨부 (선택)",
+        photoBtnText: "사진 선택",
+        photoHelp: "카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.",
+        submitBtn: "접수하기",
+        bottomNote: "제출된 의견은 안전관리 담당자가 확인 후 검토합니다.",
+        placeholders: {
+          name: "이름을 입력하세요",
+          company: "업체명을 입력하세요",
+          location: "위치를 입력하세요",
+          content: "내용을 입력하세요"
+        },
+        categoryOptions: [
+          { value: "", text: "선택" },
+          { value: "위험요인", text: "위험요인" },
+          { value: "개선의견", text: "개선의견" },
+          { value: "불안전행동", text: "불안전행동" },
+          { value: "기타", text: "기타" }
+        ],
+        alerts: {
+          required: "위치와 내용은 필수 입력입니다.",
+          submitting: "접수 중입니다...",
+          success: "접수가 완료되었습니다.",
+          fail: "접수 중 오류가 발생했습니다."
         }
+      },
 
-        if (file.size > 10 * 1024 * 1024) {
-          throw new Error("사진은 10MB 이하만 업로드 가능합니다.");
+      ja: {
+        pageTitle: "安全衛生ご意見受付",
+        pageDesc: "現場の危険要因、改善提案、安全に関する内容を自由にご記入ください。",
+        labelName: "氏名",
+        labelCompany: "会社名",
+        labelLocation: "場所",
+        labelContent: "内容",
+        labelPhoto: "写真添付（任意）",
+        photoBtnText: "写真を選択",
+        photoHelp: "カメラ撮影またはアルバムの写真を添付できます。",
+        submitBtn: "送信する",
+        bottomNote: "提出された内容は安全管理担当者が確認し、検討します。",
+        placeholders: {
+          name: "氏名を入力してください",
+          company: "会社名を入力してください",
+          location: "場所を入力してください",
+          content: "内容を入力してください"
+        },
+        categoryOptions: [
+          { value: "", text: "選択" },
+          { value: "위험요인", text: "危険要因" },
+          { value: "개선의견", text: "改善提案" },
+          { value: "불안전행동", text: "不安全行動" },
+          { value: "기타", text: "その他" }
+        ],
+        alerts: {
+          required: "場所と内容は必須です。",
+          submitting: "送信中です...",
+          success: "受付が完了しました。",
+          fail: "送信中にエラーが発生しました。"
         }
+      },
 
-        const compressed = await compressImageToTarget(file);
-
-        compressedPhotoDataUrl = compressed.dataUrl;
-        compressedPhotoName = toJpgName(file.name);
-
-        previewImg.src = compressed.dataUrl;
-        previewBox.style.display = "block";
-
-        compressInfo.textContent = `압축 완료: ${formatBytes(file.size)} → ${formatBytes(compressed.blob.size)}`;
-        compressInfo.style.display = "block";
-      } catch (error) {
-        showStatus(error.message, "error");
+      en: {
+        pageTitle: "Safety Feedback Submission",
+        pageDesc: "Please freely submit hazards, improvement suggestions, and safety-related feedback from the site.",
+        labelName: "Name",
+        labelCompany: "Company",
+        labelLocation: "Location",
+        labelContent: "Details",
+        labelPhoto: "Attach Photo (Optional)",
+        photoBtnText: "Choose Photo",
+        photoHelp: "You can attach a photo from the camera or album.",
+        submitBtn: "Submit",
+        bottomNote: "Submitted feedback will be reviewed by the safety manager.",
+        placeholders: {
+          name: "Enter your name",
+          company: "Enter company name",
+          location: "Enter location",
+          content: "Enter details"
+        },
+        categoryOptions: [
+          { value: "", text: "Select" },
+          { value: "위험요인", text: "Hazard" },
+          { value: "개선의견", text: "Improvement Suggestion" },
+          { value: "불안전행동", text: "Unsafe Act" },
+          { value: "기타", text: "Other" }
+        ],
+        alerts: {
+          required: "Location and details are required.",
+          submitting: "Submitting...",
+          success: "Submission completed.",
+          fail: "An error occurred during submission."
+        }
       }
+    };
+
+    function applyLanguage(lang) {
+      const t = i18n[lang] || i18n.ko;
+
+      document.documentElement.lang = lang;
+      document.getElementById("pageTitle").textContent = t.pageTitle;
+      document.getElementById("pageDesc").textContent = t.pageDesc;
+      document.getElementById("labelName").textContent = t.labelName;
+      document.getElementById("labelCompany").textContent = t.labelCompany;
+      document.getElementById("labelLocation").textContent = t.labelLocation;
+      document.getElementById("labelContent").textContent = t.labelContent;
+      document.getElementById("labelPhoto").textContent = t.labelPhoto;
+      document.getElementById("photoBtnText").textContent = t.photoBtnText;
+      document.getElementById("photoHelp").textContent = t.photoHelp;
+      document.getElementById("submitBtn").textContent = t.submitBtn;
+      document.getElementById("bottomNote").textContent = t.bottomNote;
+
+      document.getElementById("name").placeholder = t.placeholders.name;
+      document.getElementById("company").placeholder = t.placeholders.company;
+      document.getElementById("location").placeholder = t.placeholders.location;
+      document.getElementById("content").placeholder = t.placeholders.content;
+
+
+      t.categoryOptions.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.value;
+        option.textContent = item.text;
+        category.appendChild(option);
+      });
+
+      if ([...category.options].some(opt => opt.value === currentValue)) {
+        category.value = currentValue;
+      }
+    }
+
+    document.getElementById("langSelect").addEventListener("change", function () {
+      const lang = this.value;
+      localStorage.setItem("feedback_lang", lang);
+      applyLanguage(lang);
     });
 
-    form.addEventListener("submit", async function (e) {
+    window.addEventListener("load", function () {
+      const savedLang = localStorage.getItem("feedback_lang") || "ko";
+      document.getElementById("langSelect").value = savedLang;
+      applyLanguage(savedLang);
+    });
+
+    document.getElementById("feedbackForm").addEventListener("submit", async function (e) {
       e.preventDefault();
-      showStatus("", "");
 
-      const lastSubmit = Number(localStorage.getItem("safety_feedback_last_submit") || "0");
-      const now = Date.now();
-      if (now - lastSubmit < 15000) {
-        showStatus("연속 제출은 15초 후 다시 시도해 주세요.", "error");
+      const lang = document.getElementById("langSelect").value || "ko";
+      const t = i18n[lang];
+      const status = document.getElementById("status");
+      const submitBtn = document.getElementById("submitBtn");
+
+      const name = document.getElementById("name").value.trim();
+      const company = document.getElementById("company").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const content = document.getElementById("content").value.trim();
+      const photo = document.getElementById("photo").files[0];
+
+      if (!location || !content) {
+        status.textContent = t.alerts.required;
         return;
       }
-
-      const payload = {
-        name: document.getElementById("name").value.trim(),
-        company: document.getElementById("company").value.trim(),
-        location: document.getElementById("location").value.trim(),
-        content: document.getElementById("content").value.trim(),
-        website: document.getElementById("website").value.trim(),
-        photoName: "",
-        photoDataUrl: ""
-      };
-
-      if (!payload.name || !payload.location || !payload.content) {
-        showStatus("필수 항목을 입력해 주세요.", "error");
-        return;
-      }
-
-      if (payload.website) {
-        showStatus("비정상 요청이 감지되었습니다.", "error");
-        return;
-      }
-
-      if (compressedPhotoDataUrl) {
-        payload.photoName = compressedPhotoName;
-        payload.photoDataUrl = compressedPhotoDataUrl;
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = "접수 중...";
 
       try {
-        const formData = new FormData();
-        Object.entries(payload).forEach(([key, value]) => {
-          formData.append(key, value || "");
-        });
+        submitBtn.disabled = true;
+        status.textContent = t.alerts.submitting;
 
-        const response = await fetch(SCRIPT_URL, {
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("company", company);
+        formData.append("location", location);
+        formData.append("content", content);
+
+        if (photo) {
+          const photoDataUrl = await fileToDataUrl(photo);
+          formData.append("photoName", photo.name);
+          formData.append("photoDataUrl", photoDataUrl);
+        }
+
+        const response = await fetch("여기에_웹앱_URL", {
           method: "POST",
           body: formData
         });
@@ -562,28 +411,28 @@
         const result = await response.json();
 
         if (result.success) {
-          localStorage.setItem("safety_feedback_last_submit", String(now));
-          showStatus(`정상적으로 접수되었습니다.\n접수ID: ${result.receiptId}`, "success");
-          form.reset();
-          previewBox.style.display = "none";
-          previewImg.src = "";
-          compressInfo.style.display = "none";
-          compressInfo.textContent = "";
-          fileName.style.display = "none";
-          fileName.textContent = "";
-          compressedPhotoDataUrl = "";
-          compressedPhotoName = "";
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          status.textContent = t.alerts.success;
+          this.reset();
+          document.getElementById("langSelect").value = lang;
+          applyLanguage(lang);
         } else {
-          showStatus(result.message || "서버 응답 오류가 발생했습니다.", "error");
+          status.textContent = result.message || t.alerts.fail;
         }
-      } catch (error) {
-        showStatus("전송 실패: " + error.message, "error");
+      } catch (err) {
+        status.textContent = t.alerts.fail;
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = "접수하기";
       }
     });
+
+    function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
   </script>
 </body>
 </html>
