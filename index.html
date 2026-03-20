@@ -360,7 +360,6 @@
     const compressInfo = document.getElementById("compressInfo");
     const fileName = document.getElementById("fileName");
 
-    // 여기에 배포된 Apps Script /exec 주소 넣기
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHJuhC-Jt-9wO-TNN_THnQIcCISCJx_S6uf4DmKaPuZP_sIdC03DCtmHHCkoYxjwCGqg/exec";
 
     let compressedPhotoDataUrl = "";
@@ -429,11 +428,11 @@
 
     async function compressImageToTarget(file, options = {}) {
       const {
-        maxWidth = 1280,
-        maxHeight = 1280,
-        targetMaxBytes = 500 * 1024,
-        minQuality = 0.5,
-        startQuality = 0.8
+        maxWidth = 1000,
+        maxHeight = 1000,
+        targetMaxBytes = 300 * 1024,
+        minQuality = 0.45,
+        startQuality = 0.75
       } = options;
 
       const originalDataUrl = await readFileAsDataURL(file);
@@ -491,13 +490,7 @@
           throw new Error("사진은 10MB 이하만 업로드 가능합니다.");
         }
 
-        const compressed = await compressImageToTarget(file, {
-          maxWidth: 1280,
-          maxHeight: 1280,
-          targetMaxBytes: 500 * 1024,
-          minQuality: 0.5,
-          startQuality: 0.8
-        });
+        const compressed = await compressImageToTarget(file);
 
         compressedPhotoDataUrl = compressed.dataUrl;
         compressedPhotoName = toJpgName(file.name);
