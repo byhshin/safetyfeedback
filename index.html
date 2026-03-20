@@ -158,19 +158,6 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <select id="langSelect" class="lang-select">
-        <option value="ko">🇰🇷 한국어</option>
-        <option value="ja">🇯🇵 日本語</option>
-        <option value="en">🇺🇸 English</option>
-      </select>
-    </div>
-
-    <div class="logo-box">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/logo.png" alt="logo">
-    </div>
-
     <h1 id="pageTitle">안전보건 의견 접수</h1>
     <div id="pageDesc" class="desc">
       현장의 위험요인, 개선의견, 안전 관련 제보를 자유롭게 작성해 주세요.
@@ -198,9 +185,8 @@
       </div>
 
       <div class="field">
-        <label id="labelPhoto">사진 첨부 (선택)</label>
+        <label id="labelPhoto">사진 첨부</label>
         <div class="photo-box">
-          <label id="photoBtnText" for="photo" class="photo-btn">사진 선택</label>
           <input id="photo" name="photo" type="file" accept="image/*">
           <div id="photoHelp" class="photo-help">카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.</div>
         </div>
@@ -230,7 +216,6 @@
         labelLocation: "위치",
         labelContent: "내용",
         labelPhoto: "사진 첨부 (선택)",
-        photoBtnText: "사진 선택",
         photoHelp: "카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.",
         submitBtn: "접수하기",
         bottomNote: "제출된 의견은 안전관리 담당자가 확인 후 검토합니다.",
