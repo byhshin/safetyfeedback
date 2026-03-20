@@ -307,18 +307,6 @@
           <input type="text" id="location" name="location" placeholder="예: 1공구 A동 3층" required maxlength="100" />
         </div>
 
-        <div class="field">
-          <label for="category">구분</label>
-          <select id="category" name="category">
-            <option value="">선택하세요</option>
-            <option value="위험요인">위험요인</option>
-            <option value="개선의견">개선의견</option>
-            <option value="불안전행동">불안전행동</option>
-            <option value="불안전상태">불안전상태</option>
-            <option value="기타">기타</option>
-          </select>
-        </div>
-
         <div class="section-title">의견 내용</div>
 
         <div class="field">
@@ -541,7 +529,6 @@
         name: document.getElementById("name").value.trim(),
         company: document.getElementById("company").value.trim(),
         location: document.getElementById("location").value.trim(),
-        category: document.getElementById("category").value,
         content: document.getElementById("content").value.trim(),
         website: document.getElementById("website").value.trim(),
         photoName: "",
