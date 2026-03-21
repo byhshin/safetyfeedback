@@ -151,6 +151,14 @@
     color: #15803d;
     min-height: 24px;
   }
+
+   .placeholder-sm::placeholder {
+    font-size: 13px;
+  }
+  
+  .placeholder-xs::placeholder {
+    font-size: 12px;
+  }
 </style>
 </head>
 
@@ -235,7 +243,7 @@
       receiptId: "접수번호",
       placeholders: {
         name: "이름을 입력하세요",
-        company: "예: 유영 연승 / 협력사 이름",
+        company: "예: 유영 연승 / 소속 협력사 이름",
         location: "스톡장 / 도장동 / 조립동 / PE장",
         content: "예: PE장 2709 E11VC 호선 서비스 타워가 너무 많이 흔들려 보행이 어렵습니다."
       }
@@ -259,7 +267,7 @@
       receiptId: "Receipt ID",
       placeholders: {
         name: "Enter your name",
-        company: "e.g. Yuyoung Yeonseung / subcontractor name",
+        company: "e.g. Yuyoung Yeonseung / affiliated subcontractor name",
         location: "Stockyard / Paint Shop / Assembly Shop / PE Yard",
         content: "e.g. The service tower for hull 2709 E11VC at the PE yard is shaking too much, making walking difficult."
       }
@@ -283,7 +291,7 @@
       receiptId: "दर्ता नम्बर",
       placeholders: {
         name: "आफ्नो नाम लेख्नुहोस्",
-        company: "जस्तै: युयङ योनसुङ / उपठेकेदार कम्पनीको नाम",
+        company: "जस्तै: युयङ योनसुङ / सम्बन्धित उपठेकेदार कम्पनीको नाम",
         location: "स्टक यार्ड / पेन्ट भवन / असेंबली भवन / PE यार्ड",
         content: "जस्तै: PE यार्डको 2709 E11VC होसनको सेवा टावर धेरै हल्लिन्छ, हिँड्न गाह्रो हुन्छ।"
       }
@@ -307,7 +315,7 @@
       receiptId: "Mã tiếp nhận",
       placeholders: {
         name: "Nhập họ tên",
-        company: "Ví dụ: Yuyoung Yeonseung / tên công ty thầu phụ",
+        company: "Ví dụ: Yuyoung Yeonseung / tên công ty thầu phụ trực thuộc",
         location: "Bãi stock / xưởng sơn / xưởng lắp ráp / khu PE",
         content: "Ví dụ: Tháp service của tàu 2709 E11VC tại khu PE rung lắc quá nhiều, gây khó khăn khi đi lại."
       }
@@ -331,7 +339,7 @@
       receiptId: "Kayıt Numarası",
       placeholders: {
         name: "Adınızı girin",
-        company: "Örn: Yuyoung Yeonseung / taşeron firma adı",
+        company: "Örn: Yuyoung Yeonseung / bağlı taşeron firma adı",
         location: "Stok sahası / boya atölyesi / montaj atölyesi / PE sahası",
         content: "Örn: PE sahasındaki 2709 E11VC gemisinin servis kulesi çok fazla sallanıyor ve yürümeyi zorlaştırıyor."
       }
@@ -355,7 +363,7 @@
       receiptId: "Номер заявки",
       placeholders: {
         name: "Введите имя",
-        company: "Например: Yuyoung Yeonseung / название подрядной компании",
+        company: "Например: Yuyoung Yeonseung / название связанной подрядной компании",
         location: "Склад / окрасочный цех / сборочный цех / зона PE",
         content: "Например: Сервисная башня судна 2709 E11VC в зоне PE слишком сильно раскачивается, из-за чего трудно проходить."
       }
@@ -379,7 +387,7 @@
       receiptId: "Numéro de réception",
       placeholders: {
         name: "Saisissez votre nom",
-        company: "Ex. : Yuyoung Yeonseung / nom du sous-traitant",
+        company: "Ex. : Yuyoung Yeonseung / nom de l’entreprise sous-traitante affiliée",
         location: "Parc à stock / atelier de peinture / atelier d’assemblage / zone PE",
         content: "Ex. : La tour de service du navire 2709 E11VC dans la zone PE bouge trop et rend le passage difficile."
       }
@@ -403,7 +411,7 @@
       receiptId: "受理编号",
       placeholders: {
         name: "请输入姓名",
-        company: "例如：Yuyoung Yeonseung / 协力公司名称",
+        company: "例如：Yuyoung Yeonseung / 所属协力公司名称",
         location: "堆场 / 涂装车间 / 组装车间 / PE场",
         content: "例如：PE场2709 E11VC号船的服务塔晃动过大，导致通行困难。"
       }
@@ -427,7 +435,7 @@
       receiptId: "เลขรับเรื่อง",
       placeholders: {
         name: "กรอกชื่อ",
-        company: "เช่น Yuyoung Yeonseung / ชื่อบริษัทผู้รับเหมา",
+        company: "เช่น Yuyoung Yeonseung / ชื่อบริษัทผู้รับเหมาช่วงที่สังกัด",
         location: "ลานสต็อก / อาคารพ่นสี / อาคารประกอบ / พื้นที่ PE",
         content: "เช่น หอคอยบริการของเรือหมายเลข 2709 E11VC ในพื้นที่ PE สั่นมากเกินไป ทำให้เดินลำบาก"
       }
@@ -451,7 +459,7 @@
       receiptId: "رقم الاستلام",
       placeholders: {
         name: "أدخل الاسم",
-        company: "مثال: Yuyoung Yeonseung / اسم شركة المقاول",
+        company: "مثال: Yuyoung Yeonseung / اسم شركة المقاول التابعة",
         location: "ساحة التخزين / مبنى الطلاء / مبنى التجميع / ساحة PE",
         content: "مثال: برج الخدمة الخاص بالسفينة 2709 E11VC في ساحة PE يهتز كثيرًا مما يجعل المشي صعبًا."
       }
@@ -475,17 +483,19 @@
       receiptId: "Qabul raqami",
       placeholders: {
         name: "Ismingizni kiriting",
-        company: "Masalan: Yuyoung Yeonseung / pudratchi kompaniya nomi",
+        company: "Masalan: Yuyoung Yeonseung / tegishli pudratchi kompaniya nomi",
         location: "Stok maydoni / bo‘yoq sexi / yig‘uv sexi / PE maydoni",
         content: "Masalan: PE maydonidagi 2709 E11VC kemasining xizmat minorasi juda qattiq tebranmoqda, bu esa yurishni qiyinlashtirmoqda."
       }
     }
   };
+ 
   let isSubmitting = false;
 
   function applyLang(lang) {
     const t = i18n[lang] || i18n.ko;
-
+  
+    // 텍스트 변경
     document.getElementById("title").innerText = t.title;
     document.getElementById("desc").innerText = t.desc;
     document.getElementById("nameLabel").innerText = t.name;
@@ -496,14 +506,36 @@
     document.getElementById("photoHelp").innerText = t.photoHelp;
     document.getElementById("submitBtn").innerText = t.submit;
     document.getElementById("note").innerText = t.note;
-
-    document.getElementById("name").placeholder = t.placeholders.name;
-    document.getElementById("company").placeholder = t.placeholders.company;
-    document.getElementById("location").placeholder = t.placeholders.location;
-    document.getElementById("content").placeholder = t.placeholders.content;
-
-    document.body.dir = (lang === "ar") ? "rtl" : "ltr";
-    document.querySelector(".lang-bar").style.direction = "ltr";
+  
+    // placeholder 적용
+    const nameEl = document.getElementById("name");
+    const companyEl = document.getElementById("company");
+    const locationEl = document.getElementById("location");
+    const contentEl = document.getElementById("content");
+  
+    nameEl.placeholder = t.placeholders.name;
+    companyEl.placeholder = t.placeholders.company;
+    locationEl.placeholder = t.placeholders.location;
+    contentEl.placeholder = t.placeholders.content;
+  
+    // 🔥 placeholder 길이에 따라 자동 축소
+    adjustPlaceholderSize(nameEl);
+    adjustPlaceholderSize(companyEl);
+    adjustPlaceholderSize(locationEl);
+    adjustPlaceholderSize(contentEl);
+  
+    // 🔥 RTL 처리 (아랍어)
+    if (lang === "ar") {
+      document.body.dir = "rtl";
+    } else {
+      document.body.dir = "ltr";
+    }
+  
+    // 🔥 국기 줄은 항상 LTR 유지 (안 뒤집히게)
+    const langBar = document.querySelector(".lang-bar");
+    if (langBar) {
+      langBar.style.direction = "ltr";
+    }
   }
 
   function updateFlags(lang) {
@@ -607,6 +639,18 @@
       reader.readAsDataURL(file);
     });
   }
+
+  function adjustPlaceholderSize(el) {
+   el.classList.remove("placeholder-sm", "placeholder-xs");
+ 
+   const len = (el.placeholder || "").length;
+ 
+   if (len >= 28) {
+     el.classList.add("placeholder-xs");
+   } else if (len >= 20) {
+     el.classList.add("placeholder-sm");
+   }
+ }
 </script>
 </body>
 </html>
