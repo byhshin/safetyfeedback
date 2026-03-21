@@ -1,422 +1,214 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>안전보건 의견 접수</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>안전보건 의견 접수</title>
 
-    body {
-      margin: 0;
-      padding: 20px;
-      background: #f3f4f6;
-      font-family: Arial, "Malgun Gothic", sans-serif;
-      color: #111827;
-    }
+<style>
+body {
+  margin:0;
+  padding:20px;
+  background:#f3f4f6;
+  font-family:Arial, "Malgun Gothic", sans-serif;
+}
 
-    .wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    }
+.wrap {
+  max-width:720px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:20px;
+}
 
-    .lang-bar {
-      display: flex;
-      justify-content: flex-end;
-      gap: 6px;
-      margin-bottom: 10px;
-    }
+.lang-bar {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  justify-content:flex-end;
+  margin-bottom:10px;
+}
 
-    .lang-btn {
-      font-size: 20px;
-      padding: 8px 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      background: #ffffff;
-      cursor: pointer;
-      line-height: 1;
-    }
+.flag {
+  width:32px;
+  height:22px;
+  cursor:pointer;
+  border-radius:4px;
+  border:1px solid #ccc;
+}
 
-    .lang-btn.active {
-      background: #2563eb;
-      border-color: #2563eb;
-      color: #ffffff;
-    }
+.flag.active {
+  border:2px solid #2563eb;
+}
 
-    h1 {
-      margin: 0 0 10px;
-      font-size: 24px;
-      text-align: center;
-    }
+h1 {text-align:center;}
+.desc {text-align:center; margin-bottom:20px;}
 
-    .desc {
-      text-align: center;
-      color: #6b7280;
-      margin-bottom: 24px;
-      line-height: 1.6;
-      font-size: 15px;
-    }
+.field {margin-bottom:15px;}
+label {font-weight:bold;}
 
-    .field {
-      margin-bottom: 16px;
-    }
+input, textarea {
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
 
-    .field label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 700;
-      font-size: 15px;
-    }
+.submit-btn {
+  width:100%;
+  padding:15px;
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  font-size:18px;
+}
 
-    .field input,
-    .field textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      font-size: 15px;
-      background: #fff;
-    }
-
-    .field textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .field input[type="file"] {
-      padding: 10px;
-      background: #fff;
-    }
-
-    .photo-help {
-      margin-top: 8px;
-      color: #6b7280;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .submit-btn {
-      width: 100%;
-      border: 0;
-      border-radius: 16px;
-      background: #2563eb;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      padding: 16px;
-      cursor: pointer;
-      margin-top: 4px;
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.65;
-      cursor: default;
-    }
-
-    .bottom-note {
-      text-align: center;
-      margin-top: 16px;
-      color: #6b7280;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .bottom-logo {
-      text-align: center;
-      margin-top: 12px;
-    }
-
-    .bottom-logo img {
-      width: 120px;
-      opacity: 0.8;
-    }
-
-    .status {
-      margin-top: 14px;
-      text-align: center;
-      font-weight: 700;
-      min-height: 24px;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 12px;
-      }
-
-      .wrap {
-        padding: 18px;
-        border-radius: 16px;
-      }
-
-      h1 {
-        font-size: 21px;
-      }
-
-      .lang-btn {
-        font-size: 18px;
-        padding: 8px 10px;
-      }
-    }
-  </style>
+.bottom-note {text-align:center; margin-top:15px;}
+.bottom-logo {text-align:center; margin-top:10px;}
+.bottom-logo img {width:120px; opacity:0.8;}
+.status {text-align:center; margin-top:10px; font-weight:bold;}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="lang-bar">
-      <button type="button" class="lang-btn" data-lang="ko" onclick="changeLang('ko')">🇰🇷</button>
-      <button type="button" class="lang-btn" data-lang="ja" onclick="changeLang('ja')">🇯🇵</button>
-      <button type="button" class="lang-btn" data-lang="en" onclick="changeLang('en')">🇺🇸</button>
-    </div>
+<div class="wrap">
 
-    <div class="lang-bar">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/KO.png" onclick="changeLang('ko')" class="flag">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/EN.png" onclick="changeLang('en')" class="flag">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/NE.png" onclick="changeLang('ne')" class="flag">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/VI.png" onclick="changeLang('vi')" class="flag">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TR.png" onclick="changeLang('tr')" class="flag">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/RU.png" onclick="changeLang('ru')" class="flag">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/FR.png" onclick="changeLang('fr')" class="flag">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/ZH.png" onclick="changeLang('zh')" class="flag">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TH.png" onclick="changeLang('th')" class="flag">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/AR.png" onclick="changeLang('ar')" class="flag">
-      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/UZ.png" onclick="changeLang('uz')" class="flag">
-    </div>
+<!-- 국기 버튼 -->
+<div class="lang-bar">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/KO.png" onclick="changeLang('ko')" class="flag">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/EN.png" onclick="changeLang('en')" class="flag">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/NE.png" onclick="changeLang('ne')" class="flag">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/VI.png" onclick="changeLang('vi')" class="flag">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TR.png" onclick="changeLang('tr')" class="flag">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/RU.png" onclick="changeLang('ru')" class="flag">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/FR.png" onclick="changeLang('fr')" class="flag">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/ZH.png" onclick="changeLang('zh')" class="flag">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TH.png" onclick="changeLang('th')" class="flag">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/AR.png" onclick="changeLang('ar')" class="flag">
+  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/UZ.png" onclick="changeLang('uz')" class="flag">
+</div>
 
-    <h1 id="pageTitle">안전보건 의견 접수</h1>
+<h1 id="title">안전보건 의견 접수</h1>
+<div id="desc" class="desc">현장의 위험요인 및 개선의견을 작성해주세요.</div>
 
-    <div id="pageDesc" class="desc">
-      현장의 위험요인, 개선의견, 안전 관련 제보를 자유롭게 작성해 주세요.
-    </div>
-
-    <form id="feedbackForm">
-      <div class="field">
-        <label id="labelName" for="name">성명</label>
-        <input id="name" name="name" type="text">
-      </div>
-
-      <div class="field">
-        <label id="labelCompany" for="company">업체명</label>
-        <input id="company" name="company" type="text">
-      </div>
-
-      <div class="field">
-        <label id="labelLocation" for="location">위치</label>
-        <input id="location" name="location" type="text" required>
-      </div>
-
-      <div class="field">
-        <label id="labelContent" for="content">내용</label>
-        <textarea id="content" name="content" required></textarea>
-      </div>
-
-      <div class="field">
-        <label id="labelPhoto" for="photo">사진 첨부 (선택)</label>
-        <input id="photo" name="photo" type="file" accept="image/*">
-        <div id="photoHelp" class="photo-help">
-          카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.
-        </div>
-      </div>
-
-      <button id="submitBtn" class="submit-btn" type="submit">접수하기</button>
-
-      <div id="bottomNote" class="bottom-note">
-        제출된 의견은 안전관리 담당자가 확인 후 검토합니다.
-      </div>
-
-      <div class="bottom-logo">
-        <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/logo.png" alt="logo">
-      </div>
-
-      <div id="status" class="status"></div>
-    </form>
+<form id="form">
+  <div class="field">
+    <label id="nameLabel">성명</label>
+    <input id="name">
   </div>
 
-  <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzHJuhC-Jt-9wO-TNN_THnQIcCISCJx_S6uf4DmKaPuZP_sIdC03DCtmHHCkoYxjwCGqg/exec";
+  <div class="field">
+    <label id="companyLabel">업체명</label>
+    <input id="company">
+  </div>
 
-    const i18n = {
-      ko: {
-        pageTitle: "안전보건 의견 접수",
-        pageDesc: "현장의 위험요인, 개선의견, 안전 관련 제보를 자유롭게 작성해 주세요.",
-        labelName: "성명",
-        labelCompany: "업체명",
-        labelLocation: "위치",
-        labelContent: "내용",
-        labelPhoto: "사진 첨부 (선택)",
-        photoHelp: "카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.",
-        submitBtn: "접수하기",
-        bottomNote: "제출된 의견은 안전관리 담당자가 확인 후 검토합니다.",
-        placeholders: {
-          name: "이름을 입력하세요",
-          company: "업체명을 입력하세요",
-          location: "위치를 입력하세요",
-          content: "내용을 입력하세요"
-        },
-        alerts: {
-          required: "위치와 내용은 필수 입력입니다.",
-          submitting: "접수 중입니다...",
-          success: "접수가 완료되었습니다.",
-          fail: "접수 중 오류가 발생했습니다."
-        }
-      },
-      ja: {
-        pageTitle: "安全衛生ご意見受付",
-        pageDesc: "現場の危険要因、改善提案、安全に関する内容を自由にご記入ください。",
-        labelName: "氏名",
-        labelCompany: "会社名",
-        labelLocation: "場所",
-        labelContent: "内容",
-        labelPhoto: "写真添付（任意）",
-        photoHelp: "カメラ撮影またはアルバムの写真を添付できます。",
-        submitBtn: "送信する",
-        bottomNote: "提出された内容は安全管理担当者が確認し、検討します。",
-        placeholders: {
-          name: "氏名を入力してください",
-          company: "会社名を入力してください",
-          location: "場所を入力してください",
-          content: "内容を入力してください"
-        },
-        alerts: {
-          required: "場所と内容は必須です。",
-          submitting: "送信中です...",
-          success: "受付が完了しました。",
-          fail: "送信中にエラーが発生しました。"
-        }
-      },
-      en: {
-        pageTitle: "Safety Feedback Submission",
-        pageDesc: "Please freely submit hazards, improvement suggestions, and safety-related feedback from the site.",
-        labelName: "Name",
-        labelCompany: "Company",
-        labelLocation: "Location",
-        labelContent: "Details",
-        labelPhoto: "Attach Photo (Optional)",
-        photoHelp: "You can attach a photo from the camera or album.",
-        submitBtn: "Submit",
-        bottomNote: "Submitted feedback will be reviewed by the safety manager.",
-        placeholders: {
-          name: "Enter your name",
-          company: "Enter company name",
-          location: "Enter location",
-          content: "Enter details"
-        },
-        alerts: {
-          required: "Location and details are required.",
-          submitting: "Submitting...",
-          success: "Submission completed.",
-          fail: "An error occurred during submission."
-        }
-      }
-    };
+  <div class="field">
+    <label id="locationLabel">위치</label>
+    <input id="location">
+  </div>
 
-    function applyLanguage(lang) {
-      const t = i18n[lang] || i18n.ko;
+  <div class="field">
+    <label id="contentLabel">내용</label>
+    <textarea id="content"></textarea>
+  </div>
 
-      document.documentElement.lang = lang;
-      document.getElementById("pageTitle").textContent = t.pageTitle;
-      document.getElementById("pageDesc").textContent = t.pageDesc;
-      document.getElementById("labelName").textContent = t.labelName;
-      document.getElementById("labelCompany").textContent = t.labelCompany;
-      document.getElementById("labelLocation").textContent = t.labelLocation;
-      document.getElementById("labelContent").textContent = t.labelContent;
-      document.getElementById("labelPhoto").textContent = t.labelPhoto;
-      document.getElementById("photoHelp").textContent = t.photoHelp;
-      document.getElementById("submitBtn").textContent = t.submitBtn;
-      document.getElementById("bottomNote").textContent = t.bottomNote;
+  <div class="field">
+    <label id="photoLabel">사진 첨부</label>
+    <input type="file" id="photo" accept="image/*">
+  </div>
 
-      document.getElementById("name").placeholder = t.placeholders.name;
-      document.getElementById("company").placeholder = t.placeholders.company;
-      document.getElementById("location").placeholder = t.placeholders.location;
-      document.getElementById("content").placeholder = t.placeholders.content;
-    }
+  <button class="submit-btn" id="submitBtn">접수하기</button>
 
-    function updateLangButtons(lang) {
-      document.querySelectorAll(".lang-btn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.lang === lang);
-      });
-    }
+  <div id="note" class="bottom-note">
+    제출된 의견은 검토 후 처리됩니다.
+  </div>
 
-    function changeLang(lang) {
-      localStorage.setItem("feedback_lang", lang);
-      applyLanguage(lang);
-      updateLangButtons(lang);
-    }
+  <div class="bottom-logo">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/logo.png">
+  </div>
 
-    window.addEventListener("load", function () {
-      const savedLang = localStorage.getItem("feedback_lang") || "ko";
-      applyLanguage(savedLang);
-      updateLangButtons(savedLang);
-    });
+  <div id="status" class="status"></div>
+</form>
+</div>
 
-    document.getElementById("feedbackForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzHJuhC-Jt-9wO-TNN_THnQIcCISCJx_S6uf4DmKaPuZP_sIdC03DCtmHHCkoYxjwCGqg/exec";
 
-      const lang = localStorage.getItem("feedback_lang") || "ko";
-      const t = i18n[lang] || i18n.ko;
-      const status = document.getElementById("status");
-      const submitBtn = document.getElementById("submitBtn");
+const i18n = {
+  ko:{title:"안전보건 의견 접수",desc:"현장의 위험요인 및 개선의견을 작성해주세요.",name:"성명",company:"업체명",location:"위치",content:"내용",photo:"사진 첨부",submit:"접수하기",note:"제출된 의견은 검토 후 처리됩니다."},
+  en:{title:"Safety Feedback",desc:"Submit safety issues and suggestions.",name:"Name",company:"Company",location:"Location",content:"Content",photo:"Photo",submit:"Submit",note:"Your feedback will be reviewed."},
+  ne:{title:"सुरक्षा सुझाव",desc:"कृपया सुझाव दिनुहोस्",name:"नाम",company:"कम्पनी",location:"स्थान",content:"विवरण",photo:"तस्वीर",submit:"पेश गर्नुहोस्",note:"तपाईंको सुझाव समीक्षा गरिनेछ"},
+  vi:{title:"Góp ý an toàn",desc:"Vui lòng nhập nội dung",name:"Tên",company:"Công ty",location:"Vị trí",content:"Nội dung",photo:"Ảnh",submit:"Gửi",note:"Ý kiến sẽ được xem xét"},
+  tr:{title:"Güvenlik Bildirimi",desc:"Lütfen yazınız",name:"İsim",company:"Şirket",location:"Konum",content:"İçerik",photo:"Fotoğraf",submit:"Gönder",note:"Değerlendirilecektir"},
+  ru:{title:"Сообщение безопасности",desc:"Введите данные",name:"Имя",company:"Компания",location:"Место",content:"Содержание",photo:"Фото",submit:"Отправить",note:"Будет рассмотрено"},
+  fr:{title:"Retour sécurité",desc:"Veuillez écrire",name:"Nom",company:"Entreprise",location:"Lieu",content:"Contenu",photo:"Photo",submit:"Envoyer",note:"Sera examiné"},
+  zh:{title:"安全反馈",desc:"请输入内容",name:"姓名",company:"公司",location:"位置",content:"内容",photo:"照片",submit:"提交",note:"将被审核"},
+  th:{title:"ข้อเสนอความปลอดภัย",desc:"กรุณากรอกข้อมูล",name:"ชื่อ",company:"บริษัท",location:"สถานที่",content:"รายละเอียด",photo:"รูปภาพ",submit:"ส่ง",note:"จะถูกตรวจสอบ"},
+  ar:{title:"ملاحظات السلامة",desc:"يرجى الإدخال",name:"الاسم",company:"الشركة",location:"الموقع",content:"المحتوى",photo:"صورة",submit:"إرسال",note:"سيتم المراجعة"},
+  uz:{title:"Xavfsizlik fikri",desc:"Iltimos yozing",name:"Ism",company:"Kompaniya",location:"Joy",content:"Matn",photo:"Rasm",submit:"Yuborish",note:"Ko‘rib chiqiladi"}
+};
 
-      const name = document.getElementById("name").value.trim();
-      const company = document.getElementById("company").value.trim();
-      const location = document.getElementById("location").value.trim();
-      const content = document.getElementById("content").value.trim();
-      const photo = document.getElementById("photo").files[0];
+function applyLang(lang){
+  const t=i18n[lang];
+  document.getElementById("title").innerText=t.title;
+  document.getElementById("desc").innerText=t.desc;
+  document.getElementById("nameLabel").innerText=t.name;
+  document.getElementById("companyLabel").innerText=t.company;
+  document.getElementById("locationLabel").innerText=t.location;
+  document.getElementById("contentLabel").innerText=t.content;
+  document.getElementById("photoLabel").innerText=t.photo;
+  document.getElementById("submitBtn").innerText=t.submit;
+  document.getElementById("note").innerText=t.note;
 
-      if (!location || !content) {
-        status.textContent = t.alerts.required;
-        return;
-      }
+  document.body.dir = (lang==="ar")?"rtl":"ltr";
+}
 
-      try {
-        submitBtn.disabled = true;
-        status.textContent = t.alerts.submitting;
+function changeLang(lang){
+  localStorage.setItem("lang",lang);
+  applyLang(lang);
 
-        const formData = new FormData();
-        formData.append("name", name);
-        formData.append("company", company);
-        formData.append("location", location);
-        formData.append("content", content);
+  document.querySelectorAll(".flag").forEach(f=>f.classList.remove("active"));
+  const index={ko:0,en:1,ne:2,vi:3,tr:4,ru:5,fr:6,zh:7,th:8,ar:9,uz:10};
+  document.querySelectorAll(".flag")[index[lang]].classList.add("active");
+}
 
-        if (photo) {
-          const photoDataUrl = await fileToDataUrl(photo);
-          formData.append("photoName", photo.name);
-          formData.append("photoDataUrl", photoDataUrl);
-        }
+window.onload=()=>{
+  const lang=localStorage.getItem("lang")||"ko";
+  changeLang(lang);
+};
 
-        const response = await fetch(WEB_APP_URL, {
-          method: "POST",
-          body: formData
-        });
+document.getElementById("form").onsubmit=async(e)=>{
+  e.preventDefault();
 
-        const result = await response.json();
+  const status=document.getElementById("status");
+  status.innerText="...";
 
-        if (result.success) {
-          status.textContent = t.alerts.success;
-          this.reset();
-        } else {
-          status.textContent = result.message || t.alerts.fail;
-        }
-      } catch (err) {
-        status.textContent = t.alerts.fail;
-      } finally {
-        submitBtn.disabled = false;
-      }
-    });
+  const fd=new FormData();
+  fd.append("name",name.value);
+  fd.append("company",company.value);
+  fd.append("location",location.value);
+  fd.append("content",content.value);
 
-    function fileToDataUrl(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-  </script>
+  if(photo.files[0]){
+    const base64=await toBase64(photo.files[0]);
+    fd.append("photoDataUrl",base64);
+    fd.append("photoName",photo.files[0].name);
+  }
+
+  const res=await fetch(WEB_APP_URL,{method:"POST",body:fd});
+  const json=await res.json();
+
+  status.innerText=json.success?"OK":"ERROR";
+};
+
+function toBase64(file){
+  return new Promise(r=>{
+    const reader=new FileReader();
+    reader.onload=()=>r(reader.result);
+    reader.readAsDataURL(file);
+  });
+}
+</script>
 </body>
 </html>
