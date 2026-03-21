@@ -505,15 +505,14 @@
         "성명 : " + escapeHtml(item.name || "") + "<br>" +
         "업체명 : " + escapeHtml(item.company || "") + "<br>" +
         "위치 : " + escapeHtml(item.location || "");
-
+    
       document.getElementById("receiptContentBox").textContent = item.content || "";
-
-      const photoUrl = extractImageUrlFromFormula(item.receiptPhotoFormula || "");
-      currentReceiptPhotoUrl = photoUrl;
-
+    
+      const photoUrl = item.receiptPhotoUrl || "";
+    
       if (photoUrl) {
         document.getElementById("receiptPhotoBox").innerHTML =
-          '<img src="' + photoUrl + '" alt="접수사진">';
+          '<img src="' + photoUrl + '" alt="접수사진" referrerpolicy="no-referrer">';
       } else {
         document.getElementById("receiptPhotoBox").innerHTML =
           '<div class="photo-empty">사진 없음</div>';
