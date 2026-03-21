@@ -202,9 +202,16 @@
   <div class="wrap">
     <div class="lang-bar">
       <button class="lang-btn active" data-lang="ko" onclick="changeLanguage('ko', this)">🇰🇷</button>
-      <button class="lang-btn" data-lang="zh-CN" onclick="changeLanguage('zh-CN', this)">🇨🇳</button>
       <button class="lang-btn" data-lang="en" onclick="changeLanguage('en', this)">🇺🇸</button>
+      <button class="lang-btn" data-lang="zh-CN" onclick="changeLanguage('zh-CN', this)">🇨🇳</button>
       <button class="lang-btn" data-lang="vi" onclick="changeLanguage('vi', this)">🇻🇳</button>
+      <button class="lang-btn" data-lang="ja" onclick="changeLanguage('ja', this)">🇯🇵</button>
+      <button class="lang-btn" data-lang="th" onclick="changeLanguage('th', this)">🇹🇭</button>
+      <button class="lang-btn" data-lang="id" onclick="changeLanguage('id', this)">🇮🇩</button>
+      <button class="lang-btn" data-lang="ru" onclick="changeLanguage('ru', this)">🇷🇺</button>
+      <button class="lang-btn" data-lang="uz" onclick="changeLanguage('uz', this)">🇺🇿</button>
+      <button class="lang-btn" data-lang="ne" onclick="changeLanguage('ne', this)">🇳🇵</button>
+      <button class="lang-btn" data-lang="mn" onclick="changeLanguage('mn', this)">🇲🇳</button>
     </div>
 
     <h1 id="pageTitle" class="page-title">안전보건 의견 처리 완료</h1>
@@ -248,28 +255,7 @@
         noPhoto: "사진 없음",
         queryError: "조회 중 오류가 발생했습니다."
       },
-      "zh-CN": {
-        pageTitle: "安全与健康意见处理完成",
-        pageDesc: "显示最近完成处理的10条意见。",
-        refresh: "刷新",
-        loading: "正在加载...",
-        loaded: (n) => `最近完成处理 ${n} 条`,
-        loadError: "无法加载列表。",
-        empty: "没有已完成处理的记录。",
-        receiptTime: "提交时间",
-        location: "位置",
-        company: "公司",
-        category: "分类",
-        actor: "处理人",
-        actionTime: "处理时间",
-        receiptContent: "提交内容",
-        actionContent: "处理内容",
-        photos: "照片",
-        receiptPhoto: "提交照片",
-        actionPhoto: "处理照片",
-        noPhoto: "无照片",
-        queryError: "查询时发生错误。"
-      },
+    
       "en": {
         pageTitle: "Safety and Health Feedback Completed",
         pageDesc: "Showing the latest 10 completed feedback items.",
@@ -277,7 +263,7 @@
         loading: "Loading...",
         loaded: (n) => `Latest completed: ${n}`,
         loadError: "Failed to load the list.",
-        empty: "There are no completed items.",
+        empty: "No completed records.",
         receiptTime: "Submitted At",
         location: "Location",
         company: "Company",
@@ -290,16 +276,40 @@
         receiptPhoto: "Submitted Photo",
         actionPhoto: "Action Photo",
         noPhoto: "No photo",
-        queryError: "An error occurred while loading."
+        queryError: "An error occurred."
       },
+    
+      "zh-CN": {
+        pageTitle: "安全与健康意见处理完成",
+        pageDesc: "显示最近完成处理的10条意见。",
+        refresh: "刷新",
+        loading: "加载中...",
+        loaded: (n) => `最近完成 ${n} 条`,
+        loadError: "无法加载列表。",
+        empty: "没有已完成记录。",
+        receiptTime: "提交时间",
+        location: "位置",
+        company: "公司",
+        category: "分类",
+        actor: "处理人",
+        actionTime: "处理时间",
+        receiptContent: "提交内容",
+        actionContent: "处理内容",
+        photos: "照片",
+        receiptPhoto: "提交照片",
+        actionPhoto: "处理照片",
+        noPhoto: "无照片",
+        queryError: "发生错误。"
+      },
+    
       "vi": {
-        pageTitle: "Hoàn tất xử lý ý kiến an toàn sức khỏe",
-        pageDesc: "Hiển thị 10 ý kiến đã được xử lý gần nhất.",
+        pageTitle: "Hoàn tất xử lý ý kiến an toàn",
+        pageDesc: "Hiển thị 10 ý kiến đã xử lý gần nhất.",
         refresh: "Làm mới",
         loading: "Đang tải...",
-        loaded: (n) => `Đã xử lý gần đây: ${n}`,
+        loaded: (n) => `Đã xử lý: ${n}`,
         loadError: "Không thể tải danh sách.",
-        empty: "Không có dữ liệu đã xử lý.",
+        empty: "Không có dữ liệu.",
         receiptTime: "Thời gian gửi",
         location: "Vị trí",
         company: "Công ty",
@@ -312,7 +322,168 @@
         receiptPhoto: "Ảnh gửi",
         actionPhoto: "Ảnh xử lý",
         noPhoto: "Không có ảnh",
-        queryError: "Đã xảy ra lỗi khi tải dữ liệu."
+        queryError: "Đã xảy ra lỗi."
+      },
+    
+      "ja": {
+        pageTitle: "安全衛生意見処理完了",
+        pageDesc: "最近処理完了した10件を表示します。",
+        refresh: "更新",
+        loading: "読み込み中...",
+        loaded: (n) => `完了 ${n} 件`,
+        loadError: "読み込み失敗",
+        empty: "データなし",
+        receiptTime: "受付時間",
+        location: "場所",
+        company: "会社",
+        category: "区分",
+        actor: "対応者",
+        actionTime: "対応時間",
+        receiptContent: "受付内容",
+        actionContent: "対応内容",
+        photos: "写真",
+        receiptPhoto: "受付写真",
+        actionPhoto: "対応写真",
+        noPhoto: "写真なし",
+        queryError: "エラー発生"
+      },
+    
+      "th": {
+        pageTitle: "เสร็จสิ้นการจัดการข้อเสนอด้านความปลอดภัย",
+        pageDesc: "แสดงรายการล่าสุด 10 รายการ",
+        refresh: "รีเฟรช",
+        loading: "กำลังโหลด...",
+        loaded: (n) => `ล่าสุด ${n}`,
+        loadError: "โหลดไม่สำเร็จ",
+        empty: "ไม่มีข้อมูล",
+        receiptTime: "เวลาส่ง",
+        location: "ตำแหน่ง",
+        company: "บริษัท",
+        category: "ประเภท",
+        actor: "ผู้ดำเนินการ",
+        actionTime: "เวลาแก้ไข",
+        receiptContent: "เนื้อหา",
+        actionContent: "การดำเนินการ",
+        photos: "รูปภาพ",
+        receiptPhoto: "รูปก่อน",
+        actionPhoto: "รูปหลัง",
+        noPhoto: "ไม่มีรูป",
+        queryError: "เกิดข้อผิดพลาด"
+      },
+    
+      "id": {
+        pageTitle: "Penyelesaian Masukan Keselamatan",
+        pageDesc: "Menampilkan 10 data terbaru",
+        refresh: "Segarkan",
+        loading: "Memuat...",
+        loaded: (n) => `Terbaru ${n}`,
+        loadError: "Gagal memuat",
+        empty: "Tidak ada data",
+        receiptTime: "Waktu kirim",
+        location: "Lokasi",
+        company: "Perusahaan",
+        category: "Kategori",
+        actor: "Petugas",
+        actionTime: "Waktu tindakan",
+        receiptContent: "Isi laporan",
+        actionContent: "Tindakan",
+        photos: "Foto",
+        receiptPhoto: "Foto awal",
+        actionPhoto: "Foto tindakan",
+        noPhoto: "Tidak ada foto",
+        queryError: "Terjadi kesalahan"
+      },
+    
+      "ru": {
+        pageTitle: "Завершенные заявки по безопасности",
+        pageDesc: "Показаны последние 10 записей",
+        refresh: "Обновить",
+        loading: "Загрузка...",
+        loaded: (n) => `Последние ${n}`,
+        loadError: "Ошибка загрузки",
+        empty: "Нет данных",
+        receiptTime: "Время подачи",
+        location: "Место",
+        company: "Компания",
+        category: "Категория",
+        actor: "Ответственный",
+        actionTime: "Время обработки",
+        receiptContent: "Содержание",
+        actionContent: "Меры",
+        photos: "Фото",
+        receiptPhoto: "До",
+        actionPhoto: "После",
+        noPhoto: "Нет фото",
+        queryError: "Ошибка"
+      },
+    
+      "uz": {
+        pageTitle: "Xavfsizlik bo‘yicha yakunlangan murojaatlar",
+        pageDesc: "So‘nggi 10 ta yozuv",
+        refresh: "Yangilash",
+        loading: "Yuklanmoqda...",
+        loaded: (n) => `So‘nggi ${n}`,
+        loadError: "Yuklab bo‘lmadi",
+        empty: "Ma'lumot yo‘q",
+        receiptTime: "Yuborilgan vaqt",
+        location: "Joylashuv",
+        company: "Kompaniya",
+        category: "Turi",
+        actor: "Mas'ul",
+        actionTime: "Bajarilgan vaqt",
+        receiptContent: "Mazmun",
+        actionContent: "Chora",
+        photos: "Rasmlar",
+        receiptPhoto: "Oldin",
+        actionPhoto: "Keyin",
+        noPhoto: "Rasm yo‘q",
+        queryError: "Xatolik"
+      },
+    
+      "ne": {
+        pageTitle: "सुरक्षा सुझाव प्रक्रिया पूरा",
+        pageDesc: "अन्तिम 10 विवरण",
+        refresh: "रिफ्रेस",
+        loading: "लोड हुँदै...",
+        loaded: (n) => `अन्तिम ${n}`,
+        loadError: "लोड असफल",
+        empty: "डाटा छैन",
+        receiptTime: "समय",
+        location: "स्थान",
+        company: "कम्पनी",
+        category: "प्रकार",
+        actor: "जिम्मेवार",
+        actionTime: "समय",
+        receiptContent: "विवरण",
+        actionContent: "कार्य",
+        photos: "तस्बिर",
+        receiptPhoto: "अघिल्लो",
+        actionPhoto: "पछिल्लो",
+        noPhoto: "तस्बिर छैन",
+        queryError: "त्रुटि"
+      },
+    
+      "mn": {
+        pageTitle: "Аюулгүй ажиллагааны санал шийдвэрлэгдсэн",
+        pageDesc: "Сүүлийн 10 мэдээлэл",
+        refresh: "Шинэчлэх",
+        loading: "Ачаалж байна...",
+        loaded: (n) => `Сүүлийн ${n}`,
+        loadError: "Алдаа гарлаа",
+        empty: "Мэдээлэл алга",
+        receiptTime: "Цаг",
+        location: "Байршил",
+        company: "Компани",
+        category: "Ангилал",
+        actor: "Хариуцсан",
+        actionTime: "Шийдвэрлэсэн цаг",
+        receiptContent: "Агуулга",
+        actionContent: "Арга хэмжээ",
+        photos: "Зураг",
+        receiptPhoto: "Өмнө",
+        actionPhoto: "Дараа",
+        noPhoto: "Зураг алга",
+        queryError: "Алдаа"
       }
     };
 
@@ -397,7 +568,9 @@
       const texts = [];
       originalItems.forEach(item => {
         texts.push(item.location || "");
+        texts.push(item.company || "");
         texts.push(item.category || "");
+        texts.push(item.actor || "");
         texts.push(item.content || "");
         texts.push(item.actionContent || "");
       });
@@ -418,7 +591,9 @@
         const translated = {
           ...item,
           location: data.translated[idx++] || item.location || "",
+          company: data.translated[idx++] || item.company || "",
           category: data.translated[idx++] || item.category || "",
+          actor: data.translated[idx++] || item.actor || "",
           content: data.translated[idx++] || item.content || "",
           actionContent: data.translated[idx++] || item.actionContent || ""
         };
