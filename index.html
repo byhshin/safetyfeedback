@@ -490,9 +490,10 @@
       }
     }
   };
- 
-  let isSubmitting = false;
 
+  let isSubmitting = false;
+  let lastSubmitTime = 0;
+ 
   function applyLang(lang) {
     const t = i18n[lang] || i18n.ko;
   
@@ -573,6 +574,14 @@
     const statusEl = document.getElementById("status");
     const receiptIdBox = document.getElementById("receiptIdBox");
 
+    const now = Date.now();
+ 
+    if (now - lastSubmitTime < 15000) {
+      statusEl.className = "status error";
+      statusEl.innerText = "잠시 후 다시 시도해주세요 (15초 제한)";
+      return;
+    }
+   
     const name = nameEl.value.trim();
     const company = companyEl.value.trim();
     const location = locationEl.value.trim();
@@ -613,6 +622,7 @@
       const json = await res.json();
 
       if (json.success) {
+        lastSubmitTime = Date.now(); // 🔥 추가
         statusEl.className = "status success";
         statusEl.innerText = t.success;
         receiptIdBox.innerText = `${t.receiptId}: ${json.receiptId || ""}`;
