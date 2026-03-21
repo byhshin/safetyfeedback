@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>안전보건 의견 처리 완료</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Malgun Gothic", sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .page-title {
+      margin: 10px 0 8px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .page-desc {
+      text-align: center;
+      color: #666;
+      margin: 0 0 18px;
+      line-height: 1.6;
+    }
+
+    .top-box {
+      background: #fff;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+      margin-bottom: 16px;
+    }
+
+    .refresh-btn {
+      width: 100%;
+      height: 46px;
+      border: none;
+      border-radius: 10px;
+      background: #1565c0;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .msg {
+      min-height: 22px;
+      margin-top: 10px;
+      font-size: 13px;
+      white-space: pre-line;
+      text-align: center;
+    }
+
+    .msg.info { color: #666; }
+    .msg.error { color: #d93025; }
+    .msg.success { color: #188038; }
+
+    .list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+    }
+
+    .card-title {
+      margin: 0 0 12px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .meta {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .block-title {
+      margin: 14px 0 8px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .text-box {
+      padding: 14px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      white-space: pre-wrap;
+      line-height: 1.7;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .photo-card {
+      border: 1px solid #e5e7eb;
+      background: #fafafa;
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .photo-label {
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .photo-box {
+      width: 100%;
+      min-height: 180px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 8px;
+    }
+
+    .photo-box img {
+      max-width: 100%;
+      max-height: 320px;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .photo-empty {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .bottom-logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .bottom-logo {
+      width: 120px;
+      max-width: 34vw;
+      display: block;
+    }
+
+    @media (max-width: 700px) {
+      .photo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1 class="page-title">안전보건 의견 처리 완료</h1>
+    <p class="page-desc">최근 처리 완료된 의견 10건을 표시합니다.</p>
+
+    <div class="top-box">
+      <button class="refresh-btn" type="button" onclick="loadRecentCompleted()">새로고침</button>
+      <div id="pageMsg" class="msg info"></div>
+    </div>
+
+    <div id="list" class="list"></div>
+
+    <div class="bottom-logo-wrap">
+      <img class="bottom-logo" src="로고이미지주소" alt="logo">
+    </div>
+  </div>
+
+  <script>
+    const ACTION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHJuhC-Jt-9wO-TNN_THnQIcCISCJx_S6uf4DmKaPuZP_sIdC03DCtmHHCkoYxjwCGqg/exec";
+
+    async function postAction(formData) {
+      const res = await fetch(ACTION_SCRIPT_URL, {
+        method: "POST",
+        body: formData
+      });
+      return await res.json();
+    }
+
+    function setMsg(text, type) {
+      const el = document.getElementById("pageMsg");
+      el.textContent = text || "";
+      el.className = "msg " + (type || "info");
+    }
+
+    async function loadRecentCompleted() {
+      setMsg("불러오는 중...", "info");
+
+      try {
+        const fd = new URLSearchParams();
+        fd.append("action", "getRecentCompleted");
+
+        const data = await postAction(fd);
+
+        if (!data.ok) {
+          setMsg(data.message || "목록을 불러오지 못했습니다.", "error");
+          return;
+        }
+
+        renderList(data.items || []);
+        setMsg("최근 처리 완료 " + (data.items || []).length + "건", "success");
+      } catch (err) {
+        console.error(err);
+        setMsg("조회 중 오류가 발생했습니다.", "error");
+      }
+    }
+
+    function renderList(items) {
+      const list = document.getElementById("list");
+
+      if (!items.length) {
+        list.innerHTML = `
+          <div class="card">
+            <h2 class="card-title">처리 완료 내역이 없습니다.</h2>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = items.map(item => `
+        <div class="card">
+          <h2 class="card-title">${escapeHtml(item.receiptId)}</h2>
+
+          <div class="meta">
+            <div><strong>접수시간</strong> : ${escapeHtml(item.receiptTime || "")}</div>
+            <div><strong>위치</strong> : ${escapeHtml(item.location || "")}</div>
+            <div><strong>업체명</strong> : ${escapeHtml(item.company || "")}</div>
+            <div><strong>구분</strong> : ${escapeHtml(item.category || "")}</div>
+            <div><strong>조치자</strong> : ${escapeHtml(item.actor || "")}</div>
+            <div><strong>조치시간</strong> : ${escapeHtml(item.actionTime || "")}</div>
+          </div>
+
+          <div class="block-title">접수내용</div>
+          <div class="text-box">${escapeHtml(item.content || "")}</div>
+
+          <div class="block-title">조치내용</div>
+          <div class="text-box">${escapeHtml(item.actionContent || "")}</div>
+
+          <div class="block-title">사진</div>
+          <div class="photo-grid">
+            <div class="photo-card">
+              <div class="photo-label">접수사진</div>
+              <div class="photo-box">
+                ${item.receiptPhotoUrl
+                  ? `<img src="${escapeAttr(item.receiptPhotoUrl)}" alt="접수사진" referrerpolicy="no-referrer">`
+                  : `<div class="photo-empty">사진 없음</div>`}
+              </div>
+            </div>
+
+            <div class="photo-card">
+              <div class="photo-label">조치사진</div>
+              <div class="photo-box">
+                ${item.actionPhotoUrl
+                  ? `<img src="${escapeAttr(item.actionPhotoUrl)}" alt="조치사진" referrerpolicy="no-referrer">`
+                  : `<div class="photo-empty">사진 없음</div>`}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function escapeAttr(str) {
+      return String(str || "").replace(/"/g, "&quot;");
+    }
+
+    loadRecentCompleted();
+  </script>
+</body>
+</html>
