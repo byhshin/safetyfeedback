@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>안전보건 의견 처리</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Malgun Gothic", sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    .screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 430px;
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px 22px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      text-align: center;
+    }
+
+    .title {
+      margin: 0 0 10px;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .desc {
+      margin: 0 0 18px;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .pw-input, .select, .input, .textarea, .file-input {
+      width: 100%;
+      border: 1px solid #d0d7de;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    .pw-input, .select, .input, .file-input {
+      height: 48px;
+      padding: 0 14px;
+    }
+
+    .textarea {
+      min-height: 140px;
+      padding: 12px 14px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .btn {
+      width: 100%;
+      height: 48px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #1565c0;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: default;
+    }
+
+    .msg {
+      min-height: 22px;
+      margin-top: 12px;
+      font-size: 13px;
+      white-space: pre-line;
+    }
+
+    .msg.error { color: #d93025; }
+    .msg.info { color: #666; }
+    .msg.success { color: #188038; }
+
+    .wrap {
+      display: none;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 20px 16px 32px;
+    }
+
+    .page-title {
+      margin: 10px 0 18px;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .section {
+      background: #fff;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .label {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .meta-box {
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .content-box {
+      padding: 14px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      min-height: 90px;
+    }
+
+    .photo-box {
+      width: 100%;
+      min-height: 180px;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 10px;
+    }
+
+    .photo-box img {
+      max-width: 100%;
+      max-height: 360px;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .photo-empty {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .bottom-logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    .bottom-logo {
+      width: 90px;
+      max-width: 28vw;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 24px;
+      }
+
+      .section {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 확인중 -->
+  <div id="checkingScreen" class="screen">
+    <div class="card">
+      <h1 class="title">확인 중</h1>
+      <p class="desc">접근 권한을 확인하고 있습니다.</p>
+      <div id="checkingMsg" class="msg info"></div>
+    </div>
+  </div>
+
+  <!-- 로그인 -->
+  <div id="loginScreen" class="screen" style="display:none;">
+    <div class="card">
+      <h1 class="title">관리자 입장</h1>
+      <p class="desc">비밀번호를 입력하세요.</p>
+
+      <input
+        type="password"
+        id="passwordInput"
+        class="pw-input"
+        placeholder="비밀번호 입력"
+        onkeydown="if(event.key==='Enter'){loginAndIssueToken();}"
+      />
+
+      <button id="loginBtn" class="btn" type="button" onclick="loginAndIssueToken()">입장</button>
+      <div id="loginMsg" class="msg"></div>
+    </div>
+  </div>
+
+  <!-- 본문 -->
+  <div id="appWrap" class="wrap">
+    <h1 class="page-title">안전보건 의견 처리</h1>
+
+    <div class="section">
+      <h2 class="section-title">미완료 접수 선택</h2>
+      <label class="label" for="receiptSelect">접수코드 / 위치 / 내용</label>
+      <select id="receiptSelect" class="select" onchange="onChangeReceipt()">
+        <option value="">선택하세요</option>
+      </select>
+      <div id="listMsg" class="msg info"></div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">접수 정보</h2>
+      <div id="receiptMeta" class="meta-box">접수건을 선택하면 정보가 표시됩니다.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">접수 사진</h2>
+      <div id="receiptPhotoBox" class="photo-box">
+        <div class="photo-empty">사진 없음</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">접수 내용</h2>
+      <div id="receiptContentBox" class="content-box">접수건을 선택하면 내용이 표시됩니다.</div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">조치 입력</h2>
+
+      <div class="grid">
+        <div>
+          <label class="label" for="actorInput">조치자 이름</label>
+          <input type="text" id="actorInput" class="input" placeholder="조치자 이름 입력" />
+        </div>
+
+        <div>
+          <label class="label" for="categorySelect">구분</label>
+          <select id="categorySelect" class="select">
+            <option value="">선택하세요</option>
+            <option value="시설물">시설물</option>
+            <option value="작업방법">작업방법</option>
+            <option value="보호구">보호구</option>
+            <option value="안전표지">안전표지</option>
+            <option value="전기">전기</option>
+            <option value="화재예방">화재예방</option>
+            <option value="추락방지">추락방지</option>
+            <option value="협착·끼임">협착·끼임</option>
+            <option value="정리정돈">정리정돈</option>
+            <option value="통로·보행">통로·보행</option>
+            <option value="장비·공구">장비·공구</option>
+            <option value="교육·관리">교육·관리</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="label" for="actionContentInput">조치내용</label>
+          <textarea id="actionContentInput" class="textarea" placeholder="조치내용 입력"></textarea>
+        </div>
+
+        <div>
+          <label class="label" for="actionPhotoInput">조치 사진 첨부 (선택)</label>
+          <input type="file" id="actionPhotoInput" class="file-input" accept="image/*" />
+        </div>
+      </div>
+
+      <button id="submitBtn" class="btn" type="button" onclick="submitAction()">조치완료</button>
+      <div id="submitMsg" class="msg info"></div>
+    </div>
+
+    <div class="bottom-logo-wrap">
+      <img class="bottom-logo" src="로고이미지주소" alt="logo" />
+    </div>
+  </div>
+
+  <script>
+    const ACTION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHJuhC-Jt-9wO-TNN_THnQIcCISCJx_S6uf4DmKaPuZP_sIdC03DCtmHHCkoYxjwCGqg/exec";
+
+    let currentToken = "";
+    let currentReceiptId = "";
+    let currentReceiptPhotoUrl = "";
+
+    function getTokenFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("token") || "";
+    }
+
+    function setMsg(id, text, type) {
+      const el = document.getElementById(id);
+      el.textContent = text || "";
+      el.className = "msg " + (type || "info");
+    }
+
+    function showChecking() {
+      document.getElementById("checkingScreen").style.display = "flex";
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("appWrap").style.display = "none";
+    }
+
+    function showLogin(message) {
+      document.getElementById("checkingScreen").style.display = "none";
+      document.getElementById("loginScreen").style.display = "flex";
+      document.getElementById("appWrap").style.display = "none";
+      setMsg("loginMsg", message || "", message ? "error" : "info");
+      setTimeout(() => document.getElementById("passwordInput").focus(), 50);
+    }
+
+    function showApp() {
+      document.getElementById("checkingScreen").style.display = "none";
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("appWrap").style.display = "block";
+    }
+
+    async function postAction(formData) {
+      const res = await fetch(ACTION_SCRIPT_URL, {
+        method: "POST",
+        body: formData
+      });
+      return await res.json();
+    }
+
+    async function verifyExistingToken() {
+      currentToken = getTokenFromUrl();
+
+      if (!currentToken) {
+        showLogin("");
+        return;
+      }
+
+      try {
+        const fd = new URLSearchParams();
+        fd.append("action", "verifyToken");
+        fd.append("token", currentToken);
+
+        const data = await postAction(fd);
+
+        if (data.ok && data.valid) {
+          showApp();
+          await loadPendingReceipts();
+        } else {
+          showLogin("토큰이 없거나 만료되었습니다.\n다시 비밀번호를 입력하세요.");
+        }
+      } catch (err) {
+        console.error(err);
+        showLogin("권한 확인 중 오류가 발생했습니다.");
+      }
+    }
+
+    async function loginAndIssueToken() {
+      const input = document.getElementById("passwordInput");
+      const btn = document.getElementById("loginBtn");
+      const password = input.value.trim();
+
+      if (!password) {
+        setMsg("loginMsg", "비밀번호를 입력하세요.", "error");
+        input.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      setMsg("loginMsg", "비밀번호 확인 중...", "info");
+
+      try {
+        const fd = new URLSearchParams();
+        fd.append("action", "login");
+        fd.append("password", password);
+
+        const data = await postAction(fd);
+
+        if (data.ok && data.token) {
+          const nextUrl = window.location.pathname + "?token=" + encodeURIComponent(data.token);
+          window.location.replace(nextUrl);
+          return;
+        }
+
+        setMsg("loginMsg", data.message || "접근 권한이 없습니다.", "error");
+      } catch (err) {
+        console.error(err);
+        setMsg("loginMsg", "서버 통신 중 오류가 발생했습니다.", "error");
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function loadPendingReceipts() {
+      setMsg("listMsg", "불러오는 중...", "info");
+
+      try {
+        const fd = new URLSearchParams();
+        fd.append("action", "getPendingReceipts");
+        fd.append("token", currentToken);
+
+        const data = await postAction(fd);
+
+        if (!data.ok) {
+          setMsg("listMsg", data.message || "목록을 불러오지 못했습니다.", "error");
+          return;
+        }
+
+        const select = document.getElementById("receiptSelect");
+        select.innerHTML = '<option value="">선택하세요</option>';
+
+        const items = data.items || [];
+        for (const item of items) {
+          const opt = document.createElement("option");
+          opt.value = item.receiptId;
+          opt.textContent = item.label;
+          select.appendChild(opt);
+        }
+
+        if (items.length === 0) {
+          setMsg("listMsg", "미완료 접수건이 없습니다.", "info");
+        } else {
+          setMsg("listMsg", "미완료 접수건 " + items.length + "건", "success");
+        }
+      } catch (err) {
+        console.error(err);
+        setMsg("listMsg", "목록 조회 중 오류가 발생했습니다.", "error");
+      }
+    }
+
+    async function onChangeReceipt() {
+      const receiptId = document.getElementById("receiptSelect").value;
+      currentReceiptId = receiptId;
+
+      clearReceiptDetail();
+
+      if (!receiptId) return;
+
+      setMsg("listMsg", "접수 정보를 불러오는 중...", "info");
+
+      try {
+        const fd = new URLSearchParams();
+        fd.append("action", "getReceiptDetail");
+        fd.append("token", currentToken);
+        fd.append("receiptId", receiptId);
+
+        const data = await postAction(fd);
+
+        if (!data.ok || !data.item) {
+          setMsg("listMsg", data.message || "접수 정보를 불러오지 못했습니다.", "error");
+          return;
+        }
+
+        renderReceiptDetail(data.item);
+        setMsg("listMsg", "접수 정보를 불러왔습니다.", "success");
+      } catch (err) {
+        console.error(err);
+        setMsg("listMsg", "접수 정보 조회 중 오류가 발생했습니다.", "error");
+      }
+    }
+
+    function clearReceiptDetail() {
+      document.getElementById("receiptMeta").textContent = "접수건을 선택하면 정보가 표시됩니다.";
+      document.getElementById("receiptContentBox").textContent = "접수건을 선택하면 내용이 표시됩니다.";
+      document.getElementById("receiptPhotoBox").innerHTML = '<div class="photo-empty">사진 없음</div>';
+      currentReceiptPhotoUrl = "";
+    }
+
+    function extractImageUrlFromFormula(formula) {
+      if (!formula) return "";
+      const match = formula.match(/=IMAGE\("([^"]+)"/i);
+      return match ? match[1] : "";
+    }
+
+    function renderReceiptDetail(item) {
+      document.getElementById("receiptMeta").innerHTML =
+        "접수ID : " + escapeHtml(item.receiptId) + "<br>" +
+        "접수시간 : " + escapeHtml(item.receiptTime || "") + "<br>" +
+        "성명 : " + escapeHtml(item.name || "") + "<br>" +
+        "업체명 : " + escapeHtml(item.company || "") + "<br>" +
+        "위치 : " + escapeHtml(item.location || "");
+
+      document.getElementById("receiptContentBox").textContent = item.content || "";
+
+      const photoUrl = extractImageUrlFromFormula(item.receiptPhotoFormula || "");
+      currentReceiptPhotoUrl = photoUrl;
+
+      if (photoUrl) {
+        document.getElementById("receiptPhotoBox").innerHTML =
+          '<img src="' + photoUrl + '" alt="접수사진">';
+      } else {
+        document.getElementById("receiptPhotoBox").innerHTML =
+          '<div class="photo-empty">사진 없음</div>';
+      }
+    }
+
+    async function fileToDataUrl(file) {
+      return await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result || "");
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function submitAction() {
+      const receiptId = document.getElementById("receiptSelect").value;
+      const actor = document.getElementById("actorInput").value.trim();
+      const category = document.getElementById("categorySelect").value.trim();
+      const actionContent = document.getElementById("actionContentInput").value.trim();
+      const photoInput = document.getElementById("actionPhotoInput");
+      const file = photoInput.files && photoInput.files[0] ? photoInput.files[0] : null;
+      const btn = document.getElementById("submitBtn");
+
+      if (!receiptId) {
+        setMsg("submitMsg", "접수건을 선택하세요.", "error");
+        return;
+      }
+      if (!actor) {
+        setMsg("submitMsg", "조치자 이름을 입력하세요.", "error");
+        return;
+      }
+      if (!category) {
+        setMsg("submitMsg", "구분을 선택하세요.", "error");
+        return;
+      }
+      if (!actionContent) {
+        setMsg("submitMsg", "조치내용을 입력하세요.", "error");
+        return;
+      }
+
+      btn.disabled = true;
+      setMsg("submitMsg", "전송중...", "info");
+
+      try {
+        let photoDataUrl = "";
+        let photoName = "";
+
+        if (file) {
+          photoName = file.name || "action.jpg";
+          photoDataUrl = await fileToDataUrl(file);
+        }
+
+        const fd = new URLSearchParams();
+        fd.append("action", "submitAction");
+        fd.append("token", currentToken);
+        fd.append("receiptId", receiptId);
+        fd.append("actor", actor);
+        fd.append("category", category);
+        fd.append("actionContent", actionContent);
+        fd.append("photoName", photoName);
+        fd.append("photoDataUrl", photoDataUrl);
+
+        const data = await postAction(fd);
+
+        if (!data.ok) {
+          setMsg("submitMsg", data.message || "조치 저장에 실패했습니다.", "error");
+          return;
+        }
+
+        setMsg("submitMsg", "조치완료 : " + data.receiptId, "success");
+
+        document.getElementById("actorInput").value = "";
+        document.getElementById("categorySelect").value = "";
+        document.getElementById("actionContentInput").value = "";
+        document.getElementById("actionPhotoInput").value = "";
+
+        await loadPendingReceipts();
+        document.getElementById("receiptSelect").value = "";
+        clearReceiptDetail();
+      } catch (err) {
+        console.error(err);
+        setMsg("submitMsg", "전송 중 오류가 발생했습니다.", "error");
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    verifyExistingToken();
+  </script>
+</body>
+</html>
