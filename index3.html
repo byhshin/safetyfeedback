@@ -20,6 +20,30 @@
       padding: 20px 16px 40px;
     }
 
+    .lang-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      min-width: 64px;
+      height: 42px;
+      border: 1px solid #d0d7de;
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 0 12px;
+    }
+
+    .lang-btn.active {
+      border-color: #1565c0;
+      background: #eaf2ff;
+    }
+
     .page-title {
       margin: 10px 0 8px;
       text-align: center;
@@ -176,11 +200,18 @@
 </head>
 <body>
   <div class="wrap">
-    <h1 class="page-title">안전보건 의견 처리 완료</h1>
-    <p class="page-desc">최근 처리 완료된 의견 10건을 표시합니다.</p>
+    <div class="lang-bar">
+      <button class="lang-btn active" data-lang="ko" onclick="changeLanguage('ko', this)">🇰🇷</button>
+      <button class="lang-btn" data-lang="zh-CN" onclick="changeLanguage('zh-CN', this)">🇨🇳</button>
+      <button class="lang-btn" data-lang="en" onclick="changeLanguage('en', this)">🇺🇸</button>
+      <button class="lang-btn" data-lang="vi" onclick="changeLanguage('vi', this)">🇻🇳</button>
+    </div>
+
+    <h1 id="pageTitle" class="page-title">안전보건 의견 처리 완료</h1>
+    <p id="pageDesc" class="page-desc">최근 처리 완료된 의견 10건을 표시합니다.</p>
 
     <div class="top-box">
-      <button class="refresh-btn" type="button" onclick="loadRecentCompleted()">새로고침</button>
+      <button id="refreshBtn" class="refresh-btn" type="button" onclick="loadRecentCompleted()">새로고침</button>
       <div id="pageMsg" class="msg info"></div>
     </div>
 
@@ -193,6 +224,101 @@
 
   <script>
     const ACTION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHJuhC-Jt-9wO-TNN_THnQIcCISCJx_S6uf4DmKaPuZP_sIdC03DCtmHHCkoYxjwCGqg/exec";
+
+    const I18N = {
+      "ko": {
+        pageTitle: "안전보건 의견 처리 완료",
+        pageDesc: "최근 처리 완료된 의견 10건을 표시합니다.",
+        refresh: "새로고침",
+        loading: "불러오는 중...",
+        loaded: (n) => `최근 처리 완료 ${n}건`,
+        loadError: "목록을 불러오지 못했습니다.",
+        empty: "처리 완료 내역이 없습니다.",
+        receiptTime: "접수시간",
+        location: "위치",
+        company: "업체명",
+        category: "구분",
+        actor: "조치자",
+        actionTime: "조치시간",
+        receiptContent: "접수내용",
+        actionContent: "조치내용",
+        photos: "사진",
+        receiptPhoto: "접수사진",
+        actionPhoto: "조치사진",
+        noPhoto: "사진 없음",
+        queryError: "조회 중 오류가 발생했습니다."
+      },
+      "zh-CN": {
+        pageTitle: "安全与健康意见处理完成",
+        pageDesc: "显示最近完成处理的10条意见。",
+        refresh: "刷新",
+        loading: "正在加载...",
+        loaded: (n) => `最近完成处理 ${n} 条`,
+        loadError: "无法加载列表。",
+        empty: "没有已完成处理的记录。",
+        receiptTime: "提交时间",
+        location: "位置",
+        company: "公司",
+        category: "分类",
+        actor: "处理人",
+        actionTime: "处理时间",
+        receiptContent: "提交内容",
+        actionContent: "处理内容",
+        photos: "照片",
+        receiptPhoto: "提交照片",
+        actionPhoto: "处理照片",
+        noPhoto: "无照片",
+        queryError: "查询时发生错误。"
+      },
+      "en": {
+        pageTitle: "Safety and Health Feedback Completed",
+        pageDesc: "Showing the latest 10 completed feedback items.",
+        refresh: "Refresh",
+        loading: "Loading...",
+        loaded: (n) => `Latest completed: ${n}`,
+        loadError: "Failed to load the list.",
+        empty: "There are no completed items.",
+        receiptTime: "Submitted At",
+        location: "Location",
+        company: "Company",
+        category: "Category",
+        actor: "Handled By",
+        actionTime: "Handled At",
+        receiptContent: "Submitted Content",
+        actionContent: "Action Taken",
+        photos: "Photos",
+        receiptPhoto: "Submitted Photo",
+        actionPhoto: "Action Photo",
+        noPhoto: "No photo",
+        queryError: "An error occurred while loading."
+      },
+      "vi": {
+        pageTitle: "Hoàn tất xử lý ý kiến an toàn sức khỏe",
+        pageDesc: "Hiển thị 10 ý kiến đã được xử lý gần nhất.",
+        refresh: "Làm mới",
+        loading: "Đang tải...",
+        loaded: (n) => `Đã xử lý gần đây: ${n}`,
+        loadError: "Không thể tải danh sách.",
+        empty: "Không có dữ liệu đã xử lý.",
+        receiptTime: "Thời gian gửi",
+        location: "Vị trí",
+        company: "Công ty",
+        category: "Phân loại",
+        actor: "Người xử lý",
+        actionTime: "Thời gian xử lý",
+        receiptContent: "Nội dung gửi",
+        actionContent: "Nội dung xử lý",
+        photos: "Hình ảnh",
+        receiptPhoto: "Ảnh gửi",
+        actionPhoto: "Ảnh xử lý",
+        noPhoto: "Không có ảnh",
+        queryError: "Đã xảy ra lỗi khi tải dữ liệu."
+      }
+    };
+
+    let currentLang = "ko";
+    let originalItems = [];
+    const translationCache = {};
 
     async function postAction(formData) {
       const res = await fetch(ACTION_SCRIPT_URL, {
@@ -208,8 +334,16 @@
       el.className = "msg " + (type || "info");
     }
 
+    function applyStaticI18n() {
+      const t = I18N[currentLang] || I18N.ko;
+      document.getElementById("pageTitle").textContent = t.pageTitle;
+      document.getElementById("pageDesc").textContent = t.pageDesc;
+      document.getElementById("refreshBtn").textContent = t.refresh;
+    }
+
     async function loadRecentCompleted() {
-      setMsg("불러오는 중...", "info");
+      const t = I18N[currentLang] || I18N.ko;
+      setMsg(t.loading, "info");
 
       try {
         const fd = new URLSearchParams();
@@ -218,25 +352,91 @@
         const data = await postAction(fd);
 
         if (!data.ok) {
-          setMsg(data.message || "목록을 불러오지 못했습니다.", "error");
+          setMsg(data.message || t.loadError, "error");
           return;
         }
 
-        renderList(data.items || []);
-        setMsg("최근 처리 완료 " + (data.items || []).length + "건", "success");
+        originalItems = data.items || [];
+        await renderCurrentLanguage();
+        setMsg(t.loaded(originalItems.length), "success");
       } catch (err) {
         console.error(err);
-        setMsg("조회 중 오류가 발생했습니다.", "error");
+        setMsg(t.queryError, "error");
       }
     }
 
+    async function changeLanguage(lang, btn) {
+      currentLang = lang;
+      document.querySelectorAll(".lang-btn").forEach(el => el.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+
+      applyStaticI18n();
+
+      if (!originalItems.length) return;
+
+      const t = I18N[currentLang] || I18N.ko;
+      setMsg(t.loading, "info");
+      await renderCurrentLanguage();
+      setMsg(t.loaded(originalItems.length), "success");
+    }
+
+    async function renderCurrentLanguage() {
+      const items = await getTranslatedItemsForLang(currentLang);
+      renderList(items);
+    }
+
+    async function getTranslatedItemsForLang(lang) {
+      if (lang === "ko") {
+        return originalItems.map(item => ({ ...item }));
+      }
+
+      if (translationCache[lang]) {
+        return translationCache[lang];
+      }
+
+      const texts = [];
+      originalItems.forEach(item => {
+        texts.push(item.location || "");
+        texts.push(item.category || "");
+        texts.push(item.content || "");
+        texts.push(item.actionContent || "");
+      });
+
+      const fd = new URLSearchParams();
+      fd.append("action", "translateBatch");
+      fd.append("targetLang", lang);
+      fd.append("textsJson", JSON.stringify(texts));
+
+      const data = await postAction(fd);
+
+      if (!data.ok || !Array.isArray(data.translated)) {
+        return originalItems.map(item => ({ ...item }));
+      }
+
+      let idx = 0;
+      const translatedItems = originalItems.map(item => {
+        const translated = {
+          ...item,
+          location: data.translated[idx++] || item.location || "",
+          category: data.translated[idx++] || item.category || "",
+          content: data.translated[idx++] || item.content || "",
+          actionContent: data.translated[idx++] || item.actionContent || ""
+        };
+        return translated;
+      });
+
+      translationCache[lang] = translatedItems;
+      return translatedItems;
+    }
+
     function renderList(items) {
+      const t = I18N[currentLang] || I18N.ko;
       const list = document.getElementById("list");
 
       if (!items.length) {
         list.innerHTML = `
           <div class="card">
-            <h2 class="card-title">처리 완료 내역이 없습니다.</h2>
+            <h2 class="card-title">${escapeHtml(t.empty)}</h2>
           </div>
         `;
         return;
@@ -247,37 +447,37 @@
           <h2 class="card-title">${escapeHtml(item.receiptId)}</h2>
 
           <div class="meta">
-            <div><strong>접수시간</strong> : ${escapeHtml(item.receiptTime || "")}</div>
-            <div><strong>위치</strong> : ${escapeHtml(item.location || "")}</div>
-            <div><strong>업체명</strong> : ${escapeHtml(item.company || "")}</div>
-            <div><strong>구분</strong> : ${escapeHtml(item.category || "")}</div>
-            <div><strong>조치자</strong> : ${escapeHtml(item.actor || "")}</div>
-            <div><strong>조치시간</strong> : ${escapeHtml(item.actionTime || "")}</div>
+            <div><strong>${escapeHtml(t.receiptTime)}</strong> : ${escapeHtml(item.receiptTime || "")}</div>
+            <div><strong>${escapeHtml(t.location)}</strong> : ${escapeHtml(item.location || "")}</div>
+            <div><strong>${escapeHtml(t.company)}</strong> : ${escapeHtml(item.company || "")}</div>
+            <div><strong>${escapeHtml(t.category)}</strong> : ${escapeHtml(item.category || "")}</div>
+            <div><strong>${escapeHtml(t.actor)}</strong> : ${escapeHtml(item.actor || "")}</div>
+            <div><strong>${escapeHtml(t.actionTime)}</strong> : ${escapeHtml(item.actionTime || "")}</div>
           </div>
 
-          <div class="block-title">접수내용</div>
+          <div class="block-title">${escapeHtml(t.receiptContent)}</div>
           <div class="text-box">${escapeHtml(item.content || "")}</div>
 
-          <div class="block-title">조치내용</div>
+          <div class="block-title">${escapeHtml(t.actionContent)}</div>
           <div class="text-box">${escapeHtml(item.actionContent || "")}</div>
 
-          <div class="block-title">사진</div>
+          <div class="block-title">${escapeHtml(t.photos)}</div>
           <div class="photo-grid">
             <div class="photo-card">
-              <div class="photo-label">접수사진</div>
+              <div class="photo-label">${escapeHtml(t.receiptPhoto)}</div>
               <div class="photo-box">
                 ${item.receiptPhotoUrl
-                  ? `<img src="${escapeAttr(item.receiptPhotoUrl)}" alt="접수사진" referrerpolicy="no-referrer">`
-                  : `<div class="photo-empty">사진 없음</div>`}
+                  ? `<img src="${escapeAttr(item.receiptPhotoUrl)}" alt="${escapeAttr(t.receiptPhoto)}" referrerpolicy="no-referrer">`
+                  : `<div class="photo-empty">${escapeHtml(t.noPhoto)}</div>`}
               </div>
             </div>
 
             <div class="photo-card">
-              <div class="photo-label">조치사진</div>
+              <div class="photo-label">${escapeHtml(t.actionPhoto)}</div>
               <div class="photo-box">
                 ${item.actionPhotoUrl
-                  ? `<img src="${escapeAttr(item.actionPhotoUrl)}" alt="조치사진" referrerpolicy="no-referrer">`
-                  : `<div class="photo-empty">사진 없음</div>`}
+                  ? `<img src="${escapeAttr(item.actionPhotoUrl)}" alt="${escapeAttr(t.actionPhoto)}" referrerpolicy="no-referrer">`
+                  : `<div class="photo-empty">${escapeHtml(t.noPhoto)}</div>`}
               </div>
             </div>
           </div>
@@ -298,6 +498,7 @@
       return String(str || "").replace(/"/g, "&quot;");
     }
 
+    applyStaticI18n();
     loadRecentCompleted();
   </script>
 </body>
