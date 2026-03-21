@@ -6,211 +6,598 @@
 <title>안전보건 의견 접수</title>
 
 <style>
-body {
-  margin:0;
-  padding:20px;
-  background:#f3f4f6;
-  font-family:Arial, "Malgun Gothic", sans-serif;
-}
+  * { box-sizing: border-box; }
 
-.wrap {
-  max-width:720px;
-  margin:auto;
-  background:#fff;
-  padding:20px;
-  border-radius:20px;
-}
+  body {
+    margin: 0;
+    padding: 20px;
+    background: #f3f4f6;
+    font-family: Arial, "Malgun Gothic", sans-serif;
+    color: #111827;
+  }
 
-.lang-bar {
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  justify-content:flex-end;
-  margin-bottom:10px;
+  .wrap {
+    max-width: 720px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
 
-  direction: ltr;
-}
+  .lang-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    direction: ltr;
+  }
 
-.flag {
-  width:32px;
-  height:22px;
-  cursor:pointer;
-  border-radius:4px;
-  border:1px solid #ccc;
-}
+  .flag {
+    width: 32px;
+    height: 22px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    object-fit: cover;
+    background: #fff;
+  }
 
-.flag.active {
-  border:2px solid #2563eb;
-}
+  .flag.active {
+    border: 2px solid #2563eb;
+  }
 
-h1 {text-align:center;}
-.desc {text-align:center; margin-bottom:20px;}
+  h1 {
+    text-align: center;
+    margin: 0 0 10px;
+    font-size: 24px;
+  }
 
-.field {margin-bottom:15px;}
-label {font-weight:bold;}
+  .desc {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #6b7280;
+    line-height: 1.6;
+  }
 
-input, textarea {
-  width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
-}
+  .field {
+    margin-bottom: 15px;
+  }
 
-.submit-btn {
-  width:100%;
-  padding:15px;
-  background:#2563eb;
-  color:#fff;
-  border:none;
-  border-radius:12px;
-  font-size:18px;
-}
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
 
-.bottom-note {text-align:center; margin-top:15px;}
-.bottom-logo {text-align:center; margin-top:10px;}
-.bottom-logo img {width:120px; opacity:0.8;}
-.status {text-align:center; margin-top:10px; font-weight:bold;}
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    background: #fff;
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .photo-help {
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.7;
+    filter: brightness(0.9);
+    cursor: not-allowed;
+  }
+
+  .bottom-note {
+    text-align: center;
+    margin-top: 15px;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+
+  .bottom-logo {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .bottom-logo img {
+    width: 120px;
+    opacity: 0.8;
+  }
+
+  .status {
+    text-align: center;
+    margin-top: 12px;
+    font-weight: bold;
+    min-height: 24px;
+    line-height: 1.5;
+  }
+
+  .status.success {
+    color: #15803d;
+  }
+
+  .status.error {
+    color: #dc2626;
+  }
+
+  .receipt-id {
+    text-align: center;
+    margin-top: 8px;
+    font-weight: 700;
+    color: #15803d;
+    min-height: 24px;
+  }
 </style>
 </head>
 
 <body>
 <div class="wrap">
 
-<!-- 국기 버튼 -->
-<div class="lang-bar">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/KO.png" onclick="changeLang('ko')" class="flag">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/EN.png" onclick="changeLang('en')" class="flag">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/NE.png" onclick="changeLang('ne')" class="flag">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/VI.png" onclick="changeLang('vi')" class="flag">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TR.png" onclick="changeLang('tr')" class="flag">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/RU.png" onclick="changeLang('ru')" class="flag">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/FR.png" onclick="changeLang('fr')" class="flag">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/ZH.png" onclick="changeLang('zh')" class="flag">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TH.png" onclick="changeLang('th')" class="flag">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/AR.png" onclick="changeLang('ar')" class="flag">
-  <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/UZ.png" onclick="changeLang('uz')" class="flag">
-</div>
-
-<h1 id="title">안전보건 의견 접수</h1>
-<div id="desc" class="desc">현장의 위험요인 및 개선의견을 작성해주세요.</div>
-
-<form id="form">
-  <div class="field">
-    <label id="nameLabel">성명</label>
-    <input id="name">
+  <div class="lang-bar">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/KO.png" onclick="changeLang('ko')" class="flag" data-lang="ko" alt="KO">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/EN.png" onclick="changeLang('en')" class="flag" data-lang="en" alt="EN">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/NE.png" onclick="changeLang('ne')" class="flag" data-lang="ne" alt="NE">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/VI.png" onclick="changeLang('vi')" class="flag" data-lang="vi" alt="VI">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TR.png" onclick="changeLang('tr')" class="flag" data-lang="tr" alt="TR">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/RU.png" onclick="changeLang('ru')" class="flag" data-lang="ru" alt="RU">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/FR.png" onclick="changeLang('fr')" class="flag" data-lang="fr" alt="FR">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/ZH.png" onclick="changeLang('zh')" class="flag" data-lang="zh" alt="ZH">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TH.png" onclick="changeLang('th')" class="flag" data-lang="th" alt="TH">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/AR.png" onclick="changeLang('ar')" class="flag" data-lang="ar" alt="AR">
+    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/UZ.png" onclick="changeLang('uz')" class="flag" data-lang="uz" alt="UZ">
   </div>
 
-  <div class="field">
-    <label id="companyLabel">업체명</label>
-    <input id="company">
-  </div>
+  <h1 id="title">안전보건 의견 접수</h1>
+  <div id="desc" class="desc">현장의 위험요인 및 개선의견을 작성해주세요.</div>
 
-  <div class="field">
-    <label id="locationLabel">위치</label>
-    <input id="location">
-  </div>
+  <form id="form">
+    <div class="field">
+      <label id="nameLabel" for="name">성명</label>
+      <input id="name" name="name" type="text">
+    </div>
 
-  <div class="field">
-    <label id="contentLabel">내용</label>
-    <textarea id="content"></textarea>
-  </div>
+    <div class="field">
+      <label id="companyLabel" for="company">업체명</label>
+      <input id="company" name="company" type="text">
+    </div>
 
-  <div class="field">
-    <label id="photoLabel">사진 첨부</label>
-    <input type="file" id="photo" accept="image/*">
-  </div>
+    <div class="field">
+      <label id="locationLabel" for="location">위치</label>
+      <input id="location" name="location" type="text" required>
+    </div>
 
-  <button class="submit-btn" id="submitBtn">접수하기</button>
+    <div class="field">
+      <label id="contentLabel" for="content">내용</label>
+      <textarea id="content" name="content" required></textarea>
+    </div>
 
-  <div id="note" class="bottom-note">
-    제출된 의견은 검토 후 처리됩니다.
-  </div>
+    <div class="field">
+      <label id="photoLabel" for="photo">사진 첨부 (선택)</label>
+      <input type="file" id="photo" name="photo" accept="image/*">
+      <div id="photoHelp" class="photo-help">카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.</div>
+    </div>
 
-  <div class="bottom-logo">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/logo.png">
-  </div>
+    <button class="submit-btn" id="submitBtn" type="submit">접수하기</button>
 
-  <div id="status" class="status"></div>
-</form>
+    <div id="note" class="bottom-note">제출된 의견은 검토 후 처리됩니다.</div>
+    <div class="bottom-logo">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/logo.png" alt="logo">
+    </div>
+
+    <div id="status" class="status"></div>
+    <div id="receiptIdBox" class="receipt-id"></div>
+  </form>
 </div>
 
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzHJuhC-Jt-9wO-TNN_THnQIcCISCJx_S6uf4DmKaPuZP_sIdC03DCtmHHCkoYxjwCGqg/exec";
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzHJuhC-Jt-9wO-TNN_THnQIcCISCJx_S6uf4DmKaPuZP_sIdC03DCtmHHCkoYxjwCGqg/exec";
 
-const i18n = {
-  ko:{title:"안전보건 의견 접수",desc:"현장의 위험요인 및 개선의견을 작성해주세요.",name:"성명",company:"업체명",location:"위치",content:"내용",photo:"사진 첨부",submit:"접수하기",note:"제출된 의견은 검토 후 처리됩니다."},
-  en:{title:"Safety Feedback",desc:"Submit safety issues and suggestions.",name:"Name",company:"Company",location:"Location",content:"Content",photo:"Photo",submit:"Submit",note:"Your feedback will be reviewed."},
-  ne:{title:"सुरक्षा सुझाव",desc:"कृपया सुझाव दिनुहोस्",name:"नाम",company:"कम्पनी",location:"स्थान",content:"विवरण",photo:"तस्वीर",submit:"पेश गर्नुहोस्",note:"तपाईंको सुझाव समीक्षा गरिनेछ"},
-  vi:{title:"Góp ý an toàn",desc:"Vui lòng nhập nội dung",name:"Tên",company:"Công ty",location:"Vị trí",content:"Nội dung",photo:"Ảnh",submit:"Gửi",note:"Ý kiến sẽ được xem xét"},
-  tr:{title:"Güvenlik Bildirimi",desc:"Lütfen yazınız",name:"İsim",company:"Şirket",location:"Konum",content:"İçerik",photo:"Fotoğraf",submit:"Gönder",note:"Değerlendirilecektir"},
-  ru:{title:"Сообщение безопасности",desc:"Введите данные",name:"Имя",company:"Компания",location:"Место",content:"Содержание",photo:"Фото",submit:"Отправить",note:"Будет рассмотрено"},
-  fr:{title:"Retour sécurité",desc:"Veuillez écrire",name:"Nom",company:"Entreprise",location:"Lieu",content:"Contenu",photo:"Photo",submit:"Envoyer",note:"Sera examiné"},
-  zh:{title:"安全反馈",desc:"请输入内容",name:"姓名",company:"公司",location:"位置",content:"内容",photo:"照片",submit:"提交",note:"将被审核"},
-  th:{title:"ข้อเสนอความปลอดภัย",desc:"กรุณากรอกข้อมูล",name:"ชื่อ",company:"บริษัท",location:"สถานที่",content:"รายละเอียด",photo:"รูปภาพ",submit:"ส่ง",note:"จะถูกตรวจสอบ"},
-  ar:{title:"ملاحظات السلامة",desc:"يرجى الإدخال",name:"الاسم",company:"الشركة",location:"الموقع",content:"المحتوى",photo:"صورة",submit:"إرسال",note:"سيتم المراجعة"},
-  uz:{title:"Xavfsizlik fikri",desc:"Iltimos yozing",name:"Ism",company:"Kompaniya",location:"Joy",content:"Matn",photo:"Rasm",submit:"Yuborish",note:"Ko‘rib chiqiladi"}
-};
+  const i18n = {
+    ko: {
+      title: "안전보건 의견 접수",
+      desc: "현장의 위험요인 및 개선의견을 작성해주세요.",
+      name: "성명",
+      company: "업체명",
+      location: "위치",
+      content: "내용",
+      photo: "사진 첨부 (선택)",
+      photoHelp: "카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.",
+      submit: "접수하기",
+      submitting: "접수 중...",
+      success: "접수 완료!",
+      fail: "접수 중 오류가 발생했습니다.",
+      required: "위치와 내용은 필수 입력입니다.",
+      note: "제출된 의견은 검토 후 처리됩니다.",
+      receiptId: "접수번호",
+      placeholders: {
+        name: "이름을 입력하세요",
+        company: "업체명을 입력하세요",
+        location: "위치를 입력하세요",
+        content: "내용을 입력하세요"
+      }
+    },
+    en: {
+      title: "Safety Feedback",
+      desc: "Submit safety issues and suggestions.",
+      name: "Name",
+      company: "Company",
+      location: "Location",
+      content: "Content",
+      photo: "Attach Photo (Optional)",
+      photoHelp: "You can attach a photo from the camera or album.",
+      submit: "Submit",
+      submitting: "Submitting...",
+      success: "Submitted successfully!",
+      fail: "An error occurred during submission.",
+      required: "Location and content are required.",
+      note: "Your feedback will be reviewed.",
+      receiptId: "Receipt ID",
+      placeholders: {
+        name: "Enter your name",
+        company: "Enter company name",
+        location: "Enter location",
+        content: "Enter content"
+      }
+    },
+    ne: {
+      title: "सुरक्षा सुझाव",
+      desc: "कृपया सुरक्षा सम्बन्धी जानकारी लेख्नुहोस्।",
+      name: "नाम",
+      company: "कम्पनी",
+      location: "स्थान",
+      content: "विवरण",
+      photo: "तस्वीर संलग्न गर्नुहोस् (वैकल्पिक)",
+      photoHelp: "क्यामेरा वा एल्बमबाट तस्वीर थप्न सकिन्छ।",
+      submit: "पेश गर्नुहोस्",
+      submitting: "पेश हुँदैछ...",
+      success: "सफलतापूर्वक पेश भयो!",
+      fail: "पेश गर्दा त्रुटि भयो।",
+      required: "स्थान र विवरण अनिवार्य छन्।",
+      note: "तपाईंको सुझाव समीक्षा गरिनेछ।",
+      receiptId: "दर्ता नम्बर",
+      placeholders: {
+        name: "नाम लेख्नुहोस्",
+        company: "कम्पनी लेख्नुहोस्",
+        location: "स्थान लेख्नुहोस्",
+        content: "विवरण लेख्नुहोस्"
+      }
+    },
+    vi: {
+      title: "Góp ý an toàn",
+      desc: "Vui lòng nhập ý kiến hoặc nguy cơ an toàn.",
+      name: "Tên",
+      company: "Công ty",
+      location: "Vị trí",
+      content: "Nội dung",
+      photo: "Đính kèm ảnh (tùy chọn)",
+      photoHelp: "Bạn có thể đính kèm ảnh từ máy ảnh hoặc thư viện.",
+      submit: "Gửi",
+      submitting: "Đang gửi...",
+      success: "Gửi thành công!",
+      fail: "Có lỗi khi gửi.",
+      required: "Vị trí và nội dung là bắt buộc.",
+      note: "Ý kiến của bạn sẽ được xem xét.",
+      receiptId: "Mã tiếp nhận",
+      placeholders: {
+        name: "Nhập tên",
+        company: "Nhập tên công ty",
+        location: "Nhập vị trí",
+        content: "Nhập nội dung"
+      }
+    },
+    tr: {
+      title: "Güvenlik Bildirimi",
+      desc: "Lütfen güvenlik konusu veya önerinizi yazın.",
+      name: "İsim",
+      company: "Şirket",
+      location: "Konum",
+      content: "İçerik",
+      photo: "Fotoğraf Ekle (İsteğe bağlı)",
+      photoHelp: "Kameradan veya galeriden fotoğraf ekleyebilirsiniz.",
+      submit: "Gönder",
+      submitting: "Gönderiliyor...",
+      success: "Başarıyla gönderildi!",
+      fail: "Gönderim sırasında hata oluştu.",
+      required: "Konum ve içerik zorunludur.",
+      note: "Bildiriminiz incelenecektir.",
+      receiptId: "Kayıt Numarası",
+      placeholders: {
+        name: "İsmi girin",
+        company: "Şirket adını girin",
+        location: "Konumu girin",
+        content: "İçeriği girin"
+      }
+    },
+    ru: {
+      title: "Сообщение безопасности",
+      desc: "Пожалуйста, введите замечание или предложение по безопасности.",
+      name: "Имя",
+      company: "Компания",
+      location: "Место",
+      content: "Содержание",
+      photo: "Прикрепить фото (необязательно)",
+      photoHelp: "Можно прикрепить фото с камеры или из галереи.",
+      submit: "Отправить",
+      submitting: "Отправка...",
+      success: "Успешно отправлено!",
+      fail: "Ошибка при отправке.",
+      required: "Место и содержание обязательны.",
+      note: "Ваше сообщение будет рассмотрено.",
+      receiptId: "Номер заявки",
+      placeholders: {
+        name: "Введите имя",
+        company: "Введите компанию",
+        location: "Введите место",
+        content: "Введите содержание"
+      }
+    },
+    fr: {
+      title: "Retour sécurité",
+      desc: "Veuillez saisir votre remarque ou suggestion de sécurité.",
+      name: "Nom",
+      company: "Entreprise",
+      location: "Lieu",
+      content: "Contenu",
+      photo: "Joindre une photo (optionnel)",
+      photoHelp: "Vous pouvez joindre une photo prise avec l’appareil ou depuis l’album.",
+      submit: "Envoyer",
+      submitting: "Envoi en cours...",
+      success: "Envoyé avec succès !",
+      fail: "Une erreur s’est produite lors de l’envoi.",
+      required: "Le lieu et le contenu sont obligatoires.",
+      note: "Votre retour sera examiné.",
+      receiptId: "Numéro de réception",
+      placeholders: {
+        name: "Entrez le nom",
+        company: "Entrez l’entreprise",
+        location: "Entrez le lieu",
+        content: "Entrez le contenu"
+      }
+    },
+    zh: {
+      title: "安全反馈",
+      desc: "请输入现场隐患或改进建议。",
+      name: "姓名",
+      company: "公司",
+      location: "位置",
+      content: "内容",
+      photo: "上传照片（可选）",
+      photoHelp: "可以上传拍摄照片或相册中的照片。",
+      submit: "提交",
+      submitting: "提交中...",
+      success: "提交成功！",
+      fail: "提交时发生错误。",
+      required: "位置和内容为必填项。",
+      note: "提交的意见将由负责人审核处理。",
+      receiptId: "受理编号",
+      placeholders: {
+        name: "请输入姓名",
+        company: "请输入公司名",
+        location: "请输入位置",
+        content: "请输入内容"
+      }
+    },
+    th: {
+      title: "ข้อเสนอความปลอดภัย",
+      desc: "กรุณากรอกข้อมูลความเสี่ยงหรือข้อเสนอแนะด้านความปลอดภัย",
+      name: "ชื่อ",
+      company: "บริษัท",
+      location: "สถานที่",
+      content: "รายละเอียด",
+      photo: "แนบรูปภาพ (ไม่บังคับ)",
+      photoHelp: "คุณสามารถแนบรูปจากกล้องหรืออัลบั้มได้",
+      submit: "ส่ง",
+      submitting: "กำลังส่ง...",
+      success: "ส่งสำเร็จ!",
+      fail: "เกิดข้อผิดพลาดระหว่างส่ง",
+      required: "สถานที่และรายละเอียดเป็นข้อมูลจำเป็น",
+      note: "ข้อมูลที่ส่งจะถูกตรวจสอบ",
+      receiptId: "เลขรับเรื่อง",
+      placeholders: {
+        name: "กรอกชื่อ",
+        company: "กรอกชื่อบริษัท",
+        location: "กรอกสถานที่",
+        content: "กรอกรายละเอียด"
+      }
+    },
+    ar: {
+      title: "ملاحظات السلامة",
+      desc: "يرجى إدخال المخاطر أو اقتراحات التحسين المتعلقة بالسلامة.",
+      name: "الاسم",
+      company: "الشركة",
+      location: "الموقع",
+      content: "المحتوى",
+      photo: "إرفاق صورة (اختياري)",
+      photoHelp: "يمكنك إرفاق صورة من الكاميرا أو من الألبوم.",
+      submit: "إرسال",
+      submitting: "جارٍ الإرسال...",
+      success: "تم الإرسال بنجاح!",
+      fail: "حدث خطأ أثناء الإرسال.",
+      required: "الموقع والمحتوى مطلوبان.",
+      note: "سيتم مراجعة الملاحظات المقدمة.",
+      receiptId: "رقم الاستلام",
+      placeholders: {
+        name: "أدخل الاسم",
+        company: "أدخل اسم الشركة",
+        location: "أدخل الموقع",
+        content: "أدخل المحتوى"
+      }
+    },
+    uz: {
+      title: "Xavfsizlik fikri",
+      desc: "Iltimos, xavfsizlik bo‘yicha fikr yoki xavfni yozing.",
+      name: "Ism",
+      company: "Kompaniya",
+      location: "Joy",
+      content: "Matn",
+      photo: "Rasm biriktirish (ixtiyoriy)",
+      photoHelp: "Kamera yoki albomdan rasm biriktirishingiz mumkin.",
+      submit: "Yuborish",
+      submitting: "Yuborilmoqda...",
+      success: "Muvaffaqiyatli yuborildi!",
+      fail: "Yuborishda xatolik yuz berdi.",
+      required: "Joy va matn majburiy.",
+      note: "Fikringiz ko‘rib chiqiladi.",
+      receiptId: "Qabul raqami",
+      placeholders: {
+        name: "Ismni kiriting",
+        company: "Kompaniya nomini kiriting",
+        location: "Joyni kiriting",
+        content: "Matnni kiriting"
+      }
+    }
+  };
 
-function applyLang(lang){
-  const t=i18n[lang];
-  document.getElementById("title").innerText=t.title;
-  document.getElementById("desc").innerText=t.desc;
-  document.getElementById("nameLabel").innerText=t.name;
-  document.getElementById("companyLabel").innerText=t.company;
-  document.getElementById("locationLabel").innerText=t.location;
-  document.getElementById("contentLabel").innerText=t.content;
-  document.getElementById("photoLabel").innerText=t.photo;
-  document.getElementById("submitBtn").innerText=t.submit;
-  document.getElementById("note").innerText=t.note;
+  let isSubmitting = false;
 
-  document.body.dir = (lang==="ar")?"rtl":"ltr";
-}
+  function applyLang(lang) {
+    const t = i18n[lang] || i18n.ko;
 
-function changeLang(lang){
-  localStorage.setItem("lang",lang);
-  applyLang(lang);
+    document.getElementById("title").innerText = t.title;
+    document.getElementById("desc").innerText = t.desc;
+    document.getElementById("nameLabel").innerText = t.name;
+    document.getElementById("companyLabel").innerText = t.company;
+    document.getElementById("locationLabel").innerText = t.location;
+    document.getElementById("contentLabel").innerText = t.content;
+    document.getElementById("photoLabel").innerText = t.photo;
+    document.getElementById("photoHelp").innerText = t.photoHelp;
+    document.getElementById("submitBtn").innerText = t.submit;
+    document.getElementById("note").innerText = t.note;
 
-  document.querySelectorAll(".flag").forEach(f=>f.classList.remove("active"));
-  const index={ko:0,en:1,ne:2,vi:3,tr:4,ru:5,fr:6,zh:7,th:8,ar:9,uz:10};
-  document.querySelectorAll(".flag")[index[lang]].classList.add("active");
-}
+    document.getElementById("name").placeholder = t.placeholders.name;
+    document.getElementById("company").placeholder = t.placeholders.company;
+    document.getElementById("location").placeholder = t.placeholders.location;
+    document.getElementById("content").placeholder = t.placeholders.content;
 
-window.onload=()=>{
-  const lang=localStorage.getItem("lang")||"ko";
-  changeLang(lang);
-};
-
-document.getElementById("form").onsubmit=async(e)=>{
-  e.preventDefault();
-
-  const status=document.getElementById("status");
-  status.innerText="...";
-
-  const fd=new FormData();
-  fd.append("name",name.value);
-  fd.append("company",company.value);
-  fd.append("location",location.value);
-  fd.append("content",content.value);
-
-  if(photo.files[0]){
-    const base64=await toBase64(photo.files[0]);
-    fd.append("photoDataUrl",base64);
-    fd.append("photoName",photo.files[0].name);
+    document.body.dir = (lang === "ar") ? "rtl" : "ltr";
+    document.querySelector(".lang-bar").style.direction = "ltr";
   }
 
-  const res=await fetch(WEB_APP_URL,{method:"POST",body:fd});
-  const json=await res.json();
+  function updateFlags(lang) {
+    document.querySelectorAll(".flag").forEach(flag => {
+      flag.classList.toggle("active", flag.dataset.lang === lang);
+    });
+  }
 
-  status.innerText=json.success?"OK":"ERROR";
-};
+  function changeLang(lang) {
+    localStorage.setItem("lang", lang);
+    applyLang(lang);
+    updateFlags(lang);
+  }
 
-function toBase64(file){
-  return new Promise(r=>{
-    const reader=new FileReader();
-    reader.onload=()=>r(reader.result);
-    reader.readAsDataURL(file);
+  window.addEventListener("load", () => {
+    const lang = localStorage.getItem("lang") || "ko";
+    changeLang(lang);
   });
-}
+
+  document.getElementById("form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    if (isSubmitting) return;
+
+    const lang = localStorage.getItem("lang") || "ko";
+    const t = i18n[lang] || i18n.ko;
+
+    const nameEl = document.getElementById("name");
+    const companyEl = document.getElementById("company");
+    const locationEl = document.getElementById("location");
+    const contentEl = document.getElementById("content");
+    const photoEl = document.getElementById("photo");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusEl = document.getElementById("status");
+    const receiptIdBox = document.getElementById("receiptIdBox");
+
+    const name = nameEl.value.trim();
+    const company = companyEl.value.trim();
+    const location = locationEl.value.trim();
+    const content = contentEl.value.trim();
+    const photo = photoEl.files[0];
+
+    if (!location || !content) {
+      statusEl.className = "status error";
+      statusEl.innerText = t.required;
+      receiptIdBox.innerText = "";
+      return;
+    }
+
+    isSubmitting = true;
+    submitBtn.disabled = true;
+    statusEl.className = "status";
+    statusEl.innerText = t.submitting;
+    receiptIdBox.innerText = "";
+
+    try {
+      const fd = new FormData();
+      fd.append("name", name);
+      fd.append("company", company);
+      fd.append("location", location);
+      fd.append("content", content);
+
+      if (photo) {
+        const photoDataUrl = await toBase64(photo);
+        fd.append("photoDataUrl", photoDataUrl);
+        fd.append("photoName", photo.name);
+      }
+
+      const res = await fetch(WEB_APP_URL, {
+        method: "POST",
+        body: fd
+      });
+
+      const json = await res.json();
+
+      if (json.success) {
+        statusEl.className = "status success";
+        statusEl.innerText = t.success;
+        receiptIdBox.innerText = `${t.receiptId}: ${json.receiptId || ""}`;
+        this.reset();
+      } else {
+        statusEl.className = "status error";
+        statusEl.innerText = json.message || t.fail;
+        receiptIdBox.innerText = "";
+      }
+    } catch (err) {
+      statusEl.className = "status error";
+      statusEl.innerText = t.fail;
+      receiptIdBox.innerText = "";
+    } finally {
+      isSubmitting = false;
+      submitBtn.disabled = false;
+    }
+  });
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
 </script>
 </body>
 </html>
