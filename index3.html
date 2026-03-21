@@ -12,6 +12,15 @@
       font-family: Arial, "Malgun Gothic", sans-serif;
       background: #f5f7fb;
       color: #222;
+      direction: ltr;
+      text-align: left;
+    }
+
+    /* 아랍어 전체 RTL 적용 */
+    body.lang-ar {
+      direction: rtl;
+      text-align: right;
+      font-family: Arial, "Malgun Gothic", sans-serif;
     }
 
     .wrap {
@@ -52,6 +61,7 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
+      text-align: center;
     }
 
     .msg {
@@ -188,6 +198,37 @@
       outline: 2px solid #1565c0;
     }
 
+    /* 아랍어일 때 전체 우측 정렬 */
+    body.lang-ar .wrap,
+    body.lang-ar .card,
+    body.lang-ar .meta,
+    body.lang-ar .text-box,
+    body.lang-ar .block-title,
+    body.lang-ar .card-title,
+    body.lang-ar .photo-card,
+    body.lang-ar .photo-label,
+    body.lang-ar .photo-empty {
+      text-align: right;
+    }
+
+    /* 제목/설명/버튼/메시지는 가운데 유지 */
+    body.lang-ar .page-title,
+    body.lang-ar .page-desc,
+    body.lang-ar .refresh-btn,
+    body.lang-ar .msg,
+    body.lang-ar .bottom-logo-wrap,
+    body.lang-ar .lang-bar {
+      text-align: center;
+    }
+
+    /* input 계열 대비 */
+    body.lang-ar input,
+    body.lang-ar textarea,
+    body.lang-ar select {
+      direction: rtl;
+      text-align: right;
+    }
+
     @media (max-width: 700px) {
       .photo-grid {
         grid-template-columns: 1fr;
@@ -195,26 +236,6 @@
 
       .page-title {
         font-size: 24px;
-      }
-
-      /* 기본 */
-      body {
-        direction: ltr;
-        text-align: left;
-      }
-      
-      /* 아랍어일 때 */
-      body.lang-ar {
-        direction: rtl;
-        text-align: right;
-      }
-      
-      /* input, textarea도 같이 */
-      body.lang-ar input,
-      body.lang-ar textarea,
-      body.lang-ar select {
-        direction: rtl;
-        text-align: right;
       }
     }
   </style>
@@ -505,6 +526,75 @@
         actionPhoto: "Дараа",
         noPhoto: "Зураг алга",
         queryError: "Алдаа"
+      },
+
+      "tr": {
+        pageTitle: "İş Sağlığı ve Güvenliği Geri Bildirimi Tamamlandı",
+        pageDesc: "Son tamamlanan 10 kayıt gösteriliyor.",
+        refresh: "Yenile",
+        loading: "Yükleniyor...",
+        loaded: (n) => `Son tamamlanan: ${n}`,
+        loadError: "Liste yüklenemedi.",
+        empty: "Tamamlanan kayıt yok.",
+        receiptTime: "Gönderim Zamanı",
+        location: "Konum",
+        company: "Şirket",
+        category: "Kategori",
+        actor: "İşlemi Yapan",
+        actionTime: "İşlem Zamanı",
+        receiptContent: "Gönderilen İçerik",
+        actionContent: "Yapılan İşlem",
+        photos: "Fotoğraflar",
+        receiptPhoto: "Gönderilen Fotoğraf",
+        actionPhoto: "İşlem Fotoğrafı",
+        noPhoto: "Fotoğraf yok",
+        queryError: "Bir hata oluştu."
+      },
+
+      "fr": {
+        pageTitle: "Retour sécurité et santé traité",
+        pageDesc: "Affichage des 10 derniers éléments traités.",
+        refresh: "Actualiser",
+        loading: "Chargement...",
+        loaded: (n) => `Derniers traités : ${n}`,
+        loadError: "Impossible de charger la liste.",
+        empty: "Aucun enregistrement traité.",
+        receiptTime: "Date de soumission",
+        location: "Lieu",
+        company: "Entreprise",
+        category: "Catégorie",
+        actor: "Traité par",
+        actionTime: "Date de traitement",
+        receiptContent: "Contenu soumis",
+        actionContent: "Mesure prise",
+        photos: "Photos",
+        receiptPhoto: "Photo soumise",
+        actionPhoto: "Photo de traitement",
+        noPhoto: "Aucune photo",
+        queryError: "Une erreur s'est produite."
+      },
+
+      "ar": {
+        pageTitle: "اكتمال معالجة ملاحظات السلامة والصحة",
+        pageDesc: "يتم عرض آخر 10 ملاحظات مكتملة المعالجة.",
+        refresh: "تحديث",
+        loading: "جارٍ التحميل...",
+        loaded: (n) => `آخر العناصر المكتملة: ${n}`,
+        loadError: "تعذر تحميل القائمة.",
+        empty: "لا توجد سجلات مكتملة.",
+        receiptTime: "وقت الاستلام",
+        location: "الموقع",
+        company: "اسم الشركة",
+        category: "التصنيف",
+        actor: "المعالج",
+        actionTime: "وقت الإجراء",
+        receiptContent: "محتوى الاستلام",
+        actionContent: "محتوى الإجراء",
+        photos: "الصور",
+        receiptPhoto: "صورة الاستلام",
+        actionPhoto: "صورة الإجراء",
+        noPhoto: "لا توجد صورة",
+        queryError: "حدث خطأ أثناء الاستعلام."
       }
     };
 
@@ -559,25 +649,28 @@
 
     async function changeLanguage(lang, btn) {
       currentLang = lang;
-    
-      document.querySelectorAll(".lang-btn").forEach(el => el.classList.remove("active"));
+
+      /* 기존 lang-btn -> flag 로 수정 */
+      document.querySelectorAll(".flag").forEach(el => el.classList.remove("active"));
       if (btn) btn.classList.add("active");
-    
-      // ⭐ 여기 추가
-      document.body.classList.remove("lang-ar");
-      if (lang === "ar") {
-        document.body.classList.add("lang-ar");
-      }
-    
+
+      /* 아랍어일 때 body에 클래스 부여 */
+      document.body.classList.toggle("lang-ar", lang === "ar");
+
       applyStaticI18n();
-    
+
       if (!originalItems.length) return;
-    
+
       const t = I18N[currentLang] || I18N.ko;
       setMsg(t.loading, "info");
-      renderCurrentLanguage().then(() => {
+
+      try {
+        await renderCurrentLanguage();
         setMsg(t.loaded(originalItems.length), "success");
-      });
+      } catch (err) {
+        console.error(err);
+        setMsg(t.queryError, "error");
+      }
     }
 
     async function renderCurrentLanguage() {
