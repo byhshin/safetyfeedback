@@ -196,6 +196,26 @@
       .page-title {
         font-size: 24px;
       }
+
+      /* 기본 */
+      body {
+        direction: ltr;
+        text-align: left;
+      }
+      
+      /* 아랍어일 때 */
+      body.lang-ar {
+        direction: rtl;
+        text-align: right;
+      }
+      
+      /* input, textarea도 같이 */
+      body.lang-ar input,
+      body.lang-ar textarea,
+      body.lang-ar select {
+        direction: rtl;
+        text-align: right;
+      }
     }
   </style>
 </head>
@@ -540,8 +560,14 @@
     async function changeLanguage(lang, btn) {
       currentLang = lang;
     
-      document.querySelectorAll(".flag").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".lang-btn").forEach(el => el.classList.remove("active"));
       if (btn) btn.classList.add("active");
+    
+      // ⭐ 여기 추가
+      document.body.classList.remove("lang-ar");
+      if (lang === "ar") {
+        document.body.classList.add("lang-ar");
+      }
     
       applyStaticI18n();
     
@@ -549,8 +575,9 @@
     
       const t = I18N[currentLang] || I18N.ko;
       setMsg(t.loading, "info");
-      await renderCurrentLanguage();
-      setMsg(t.loaded(originalItems.length), "success");
+      renderCurrentLanguage().then(() => {
+        setMsg(t.loaded(originalItems.length), "success");
+      });
     }
 
     async function renderCurrentLanguage() {
