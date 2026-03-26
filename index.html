@@ -1,225 +1,212 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>안전보건 의견 접수</title>
-
-<style>
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    padding: 20px;
-    background: #f3f4f6;
-    font-family: Arial, "Malgun Gothic", sans-serif;
-    color: #111827;
-  }
-
-  .wrap {
-    max-width: 720px;
-    margin: auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  }
-
-  .lang-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    justify-content: center;
-    margin-bottom: 10px;
-    direction: ltr;
-  }
-
-  .flag {
-    width: 32px;
-    height: 22px;
-    cursor: pointer;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    object-fit: cover;
-    background: #fff;
-  }
-
-  .flag.active {
-    border: 2px solid #2563eb;
-  }
-
-  h1 {
-    text-align: center;
-    margin: 0 0 10px;
-    font-size: 24px;
-  }
-
-  .desc {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #6b7280;
-    line-height: 1.6;
-  }
-
-  .field {
-    margin-bottom: 15px;
-  }
-
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
-
-  input, textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    background: #fff;
-  }
-
-  textarea {
-    min-height: 120px;
-    resize: vertical;
-  }
-
-  .photo-help {
-    margin-top: 8px;
-    color: #6b7280;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-
-  .submit-btn {
-    width: 100%;
-    padding: 15px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity 0.2s ease, filter 0.2s ease;
-  }
-
-  .submit-btn:disabled {
-    opacity: 0.7;
-    filter: brightness(0.9);
-    cursor: not-allowed;
-  }
-
-  .bottom-note {
-    text-align: center;
-    margin-top: 15px;
-    color: #6b7280;
-    line-height: 1.6;
-  }
-
-  .bottom-logo {
-    text-align: center;
-    margin-top: 10px;
-  }
-
-  .bottom-logo img {
-    width: 120px;
-    opacity: 0.8;
-  }
-
-  .status {
-    text-align: center;
-    margin-top: 12px;
-    font-weight: bold;
-    min-height: 24px;
-    line-height: 1.5;
-  }
-
-  .status.success {
-    color: #15803d;
-  }
-
-  .status.error {
-    color: #dc2626;
-  }
-
-  .receipt-id {
-    text-align: center;
-    margin-top: 8px;
-    font-weight: 700;
-    color: #15803d;
-    min-height: 24px;
-  }
-
-   .placeholder-sm::placeholder {
-    font-size: 13px;
-  }
-  
-  .placeholder-xs::placeholder {
-    font-size: 12px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>안전보건 의견 접수</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .lang-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .flag {
+      width: 32px;
+      height: 22px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 4px;
+    }
+    .flag.active {
+      border-color: #2f6fed;
+    }
+    h1 {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: 24px;
+      line-height: 1.35;
+    }
+    .desc {
+      margin: 0 0 20px;
+      text-align: center;
+      color: #555;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+    .field {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+      width: 100%;
+      font-size: 16px;
+    }
+    input[type="text"],
+    textarea {
+      border: 1px solid #cfd7e6;
+      border-radius: 10px;
+      padding: 12px;
+      outline: none;
+      background: #fff;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+    .photo-help,
+    .bottom-note {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.45;
+    }
+    .submit-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #2f6fed;
+      color: white;
+      margin-top: 8px;
+    }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    .status {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 10px;
+      display: none;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+    .status.success {
+      display: block;
+      background: #eaf7ed;
+      color: #18794e;
+    }
+    .status.error {
+      display: block;
+      background: #fdecec;
+      color: #c62828;
+    }
+    .status.info {
+      display: block;
+      background: #eef4ff;
+      color: #2457c5;
+    }
+    .receipt-id {
+      margin-top: 10px;
+      font-weight: 700;
+      color: #2457c5;
+      word-break: break-all;
+    }
+    .bottom-logo {
+      margin-top: 16px;
+      text-align: center;
+    }
+    .bottom-logo img {
+      width: 60px;
+      opacity: 0.95;
+    }
+    .placeholder-sm::placeholder { font-size: 14px; }
+    .placeholder-xs::placeholder { font-size: 12px; }
+  </style>
 </head>
-
 <body>
 <div class="wrap">
+  <div class="card">
+    <div class="lang-bar">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/KO.png" class="flag active" data-lang="ko" alt="KO">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/EN.png" class="flag" data-lang="en" alt="EN">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/NE.png" class="flag" data-lang="ne" alt="NE">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/VI.png" class="flag" data-lang="vi" alt="VI">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TR.png" class="flag" data-lang="tr" alt="TR">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/RU.png" class="flag" data-lang="ru" alt="RU">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/FR.png" class="flag" data-lang="fr" alt="FR">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/CN.png" class="flag" data-lang="zh" alt="ZH">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TH.png" class="flag" data-lang="th" alt="TH">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/AR.png" class="flag" data-lang="ar" alt="AR">
+      <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/UZ.png" class="flag" data-lang="uz" alt="UZ">
+    </div>
 
-  <div class="lang-bar">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/KO.png" onclick="changeLang('ko')" class="flag" data-lang="ko" alt="KO">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/EN.png" onclick="changeLang('en')" class="flag" data-lang="en" alt="EN">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/NE.png" onclick="changeLang('ne')" class="flag" data-lang="ne" alt="NE">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/VI.png" onclick="changeLang('vi')" class="flag" data-lang="vi" alt="VI">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TR.png" onclick="changeLang('tr')" class="flag" data-lang="tr" alt="TR">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/RU.png" onclick="changeLang('ru')" class="flag" data-lang="ru" alt="RU">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/FR.png" onclick="changeLang('fr')" class="flag" data-lang="fr" alt="FR">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/ZH.png" onclick="changeLang('zh')" class="flag" data-lang="zh" alt="ZH">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/TH.png" onclick="changeLang('th')" class="flag" data-lang="th" alt="TH">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/AR.png" onclick="changeLang('ar')" class="flag" data-lang="ar" alt="AR">
-    <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/flag/UZ.png" onclick="changeLang('uz')" class="flag" data-lang="uz" alt="UZ">
+    <h1 id="title">안전보건 의견 접수</h1>
+    <p id="desc" class="desc">현장의 위험요인 및 개선 의견을 작성해주세요.</p>
+
+    <form id="feedbackForm">
+      <input type="text" name="website" id="website" style="display:none">
+
+      <div class="field">
+        <label id="nameLabel" for="name">성명</label>
+        <input type="text" id="name" name="name">
+      </div>
+
+      <div class="field">
+        <label id="companyLabel" for="company">업체명</label>
+        <input type="text" id="company" name="company" required>
+      </div>
+
+      <div class="field">
+        <label id="locationLabel" for="location">위치</label>
+        <input type="text" id="location" name="location" required>
+      </div>
+
+      <div class="field">
+        <label id="contentLabel" for="content">내용</label>
+        <textarea id="content" name="content" required></textarea>
+      </div>
+
+      <div class="field">
+        <label id="photoLabel" for="photo">사진 첨부 (선택)</label>
+        <input type="file" id="photo" name="photo" accept="image/*">
+        <div id="photoHelp" class="photo-help">카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.</div>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" type="submit">접수하기</button>
+
+      <div id="note" class="bottom-note">제출된 의견은 검토 후 처리됩니다.</div>
+
+      <div class="bottom-logo">
+        <a href="index2.html">
+          <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/logo.png" alt="조치 페이지 이동">
+        </a>
+      </div>
+
+      <div id="status" class="status"></div>
+      <div id="receiptIdBox" class="receipt-id"></div>
+    </form>
   </div>
-
-  <h1 id="title">안전보건 의견 접수</h1>
-  <div id="desc" class="desc">현장의 위험요인 및 개선의견을 작성해주세요.</div>
-
-  <form id="form">
-    <div class="field">
-      <label id="nameLabel" for="name">성명</label>
-      <input id="name" name="name" type="text">
-    </div>
-
-    <div class="field">
-      <label id="companyLabel" for="company">업체명</label>
-      <input id="company" name="company" type="text" required>
-    </div>
-
-    <div class="field">
-      <label id="locationLabel" for="location">위치</label>
-      <input id="location" name="location" type="text" required>
-    </div>
-
-    <div class="field">
-      <label id="contentLabel" for="content">내용</label>
-      <textarea id="content" name="content" required></textarea>
-    </div>
-
-    <div class="field">
-      <label id="photoLabel" for="photo">사진 첨부 (선택)</label>
-      <input type="file" id="photo" name="photo" accept="image/*">
-      <div id="photoHelp" class="photo-help">카메라 촬영 또는 앨범의 사진을 첨부할 수 있습니다.</div>
-    </div>
-
-    <button class="submit-btn" id="submitBtn" type="submit">접수하기</button>
-
-    <div id="note" class="bottom-note">제출된 의견은 검토 후 처리됩니다.</div>
-    <div class="bottom-logo">
-      <a href="index2.html">
-        <img src="https://raw.githubusercontent.com/byhshin/safetyfeedback/main/logo.png" alt="조치 페이지 이동">
-      </a>
-    </div>
-    <div id="status" class="status"></div>
-    <div id="receiptIdBox" class="receipt-id"></div>
-  </form>
 </div>
 
 <script>
@@ -239,7 +226,7 @@
       submitting: "접수 중...",
       success: "접수 완료!",
       fail: "접수 중 오류가 발생했습니다.",
-      required: "위치와 내용은 필수 입력입니다.",
+      required: "업체명, 위치, 내용은 필수 입력입니다.",
       note: "제출된 의견은 검토 후 처리됩니다.",
       receiptId: "접수번호",
       placeholders: {
@@ -249,7 +236,6 @@
         content: "예: PE장 2709 E11VC 호선 서비스 타워가 너무 많이 흔들려 보행이 어렵습니다."
       }
     },
-  
     en: {
       title: "Safety and Health Feedback Submission",
       desc: "Please write any on-site hazards or improvement suggestions.",
@@ -263,7 +249,7 @@
       submitting: "Submitting...",
       success: "Submission Complete!",
       fail: "An error occurred during submission.",
-      required: "Location and details are required.",
+      required: "Company, location, and details are required.",
       note: "Submitted feedback will be reviewed and processed.",
       receiptId: "Receipt ID",
       placeholders: {
@@ -273,7 +259,6 @@
         content: "e.g. The service tower for hull 2709 E11VC at the PE yard is shaking too much, making walking difficult."
       }
     },
-  
     ne: {
       title: "सुरक्षा तथा स्वास्थ्य सुझाव दर्ता",
       desc: "कृपया कार्यस्थलका जोखिम वा सुधार सुझाव लेख्नुहोस्।",
@@ -287,7 +272,7 @@
       submitting: "पेश हुँदैछ...",
       success: "पेश सफल भयो!",
       fail: "पेश गर्ने क्रममा त्रुटि भयो।",
-      required: "स्थान र विवरण अनिवार्य छन्।",
+      required: "कम्पनी, स्थान र विवरण अनिवार्य छन्।",
       note: "पेश गरिएको सुझाव समीक्षा गरी प्रक्रिया गरिनेछ।",
       receiptId: "दर्ता नम्बर",
       placeholders: {
@@ -297,7 +282,6 @@
         content: "जस्तै: PE यार्डको 2709 E11VC होसनको सेवा टावर धेरै हल्लिन्छ, हिँड्न गाह्रो हुन्छ।"
       }
     },
-  
     vi: {
       title: "Tiếp nhận ý kiến an toàn và sức khỏe",
       desc: "Vui lòng ghi nội dung nguy cơ tại hiện trường hoặc ý kiến cải thiện.",
@@ -311,7 +295,7 @@
       submitting: "Đang gửi...",
       success: "Gửi thành công!",
       fail: "Đã xảy ra lỗi khi gửi.",
-      required: "Vị trí và nội dung là bắt buộc.",
+      required: "Tên công ty, vị trí và nội dung là bắt buộc.",
       note: "Ý kiến đã gửi sẽ được xem xét và xử lý.",
       receiptId: "Mã tiếp nhận",
       placeholders: {
@@ -321,7 +305,6 @@
         content: "Ví dụ: Tháp service của tàu 2709 E11VC tại khu PE rung lắc quá nhiều, gây khó khăn khi đi lại."
       }
     },
-  
     tr: {
       title: "İş Sağlığı ve Güvenliği Geri Bildirim Başvurusu",
       desc: "Lütfen sahadaki tehlikeleri veya iyileştirme önerilerini yazın.",
@@ -335,7 +318,7 @@
       submitting: "Gönderiliyor...",
       success: "Gönderim tamamlandı!",
       fail: "Gönderim sırasında bir hata oluştu.",
-      required: "Konum ve içerik zorunludur.",
+      required: "Şirket adı, konum ve içerik zorunludur.",
       note: "Gönderilen görüş incelenip işleme alınacaktır.",
       receiptId: "Kayıt Numarası",
       placeholders: {
@@ -345,250 +328,231 @@
         content: "Örn: PE sahasındaki 2709 E11VC gemisinin servis kulesi çok fazla sallanıyor ve yürümeyi zorlaştırıyor."
       }
     },
-  
     ru: {
       title: "Подача замечаний по охране труда и безопасности",
       desc: "Пожалуйста, укажите опасные факторы на месте работы или предложения по улучшению.",
       name: "Имя",
-      company: "Название компании",
+      company: "Компания",
       location: "Место",
       content: "Содержание",
       photo: "Прикрепить фото (необязательно)",
-      photoHelp: "Можно прикрепить фото, сделанное камерой, или выбрать его из альбома.",
+      photoHelp: "Можно прикрепить фото, снятое камерой или выбранное из галереи.",
       submit: "Отправить",
       submitting: "Отправка...",
-      success: "Отправка завершена!",
-      fail: "Во время отправки произошла ошибка.",
-      required: "Место и содержание обязательны для заполнения.",
-      note: "Отправленное замечание будет рассмотрено и обработано.",
-      receiptId: "Номер заявки",
+      success: "Успешно отправлено!",
+      fail: "Произошла ошибка при отправке.",
+      required: "Компания, место и содержание обязательны.",
+      note: "Отправленное сообщение будет рассмотрено и обработано.",
+      receiptId: "Номер обращения",
       placeholders: {
         name: "Введите имя",
-        company: "Например: Yuyoung Yeonseung / название связанной подрядной компании",
-        location: "Склад / окрасочный цех / сборочный цех / зона PE",
-        content: "Например: Сервисная башня судна 2709 E11VC в зоне PE слишком сильно раскачивается, из-за чего трудно проходить."
+        company: "Например: Yuyoung Yeonseung / название субподрядной компании",
+        location: "Сток-площадка / малярный цех / сборочный цех / PE зона",
+        content: "Например: Сервисная башня судна 2709 E11VC в зоне PE слишком сильно раскачивается, из-за чего трудно передвигаться."
       }
     },
-  
     fr: {
-      title: "Soumission d'avis sécurité et santé",
-      desc: "Veuillez écrire les dangers constatés sur le terrain ou les suggestions d'amélioration.",
+      title: "Soumission d'avis de sécurité et de santé",
+      desc: "Veuillez écrire les risques sur le terrain ou vos suggestions d'amélioration.",
       name: "Nom",
-      company: "Nom de l'entreprise",
+      company: "Entreprise",
       location: "Emplacement",
       content: "Contenu",
       photo: "Joindre une photo (optionnel)",
-      photoHelp: "Vous pouvez joindre une photo prise avec l’appareil photo ou sélectionnée depuis l’album.",
+      photoHelp: "Vous pouvez joindre une photo prise par l'appareil photo ou choisie dans l'album.",
       submit: "Envoyer",
       submitting: "Envoi en cours...",
       success: "Envoi terminé !",
-      fail: "Une erreur est survenue lors de l’envoi.",
-      required: "L’emplacement et le contenu sont obligatoires.",
-      note: "L’avis soumis sera examiné et traité.",
+      fail: "Une erreur s'est produite pendant l'envoi.",
+      required: "L'entreprise, l'emplacement et le contenu sont obligatoires.",
+      note: "Les avis soumis seront examinés puis traités.",
       receiptId: "Numéro de réception",
       placeholders: {
-        name: "Saisissez votre nom",
-        company: "Ex. : Yuyoung Yeonseung / nom de l’entreprise sous-traitante affiliée",
-        location: "Parc à stock / atelier de peinture / atelier d’assemblage / zone PE",
-        content: "Ex. : La tour de service du navire 2709 E11VC dans la zone PE bouge trop et rend le passage difficile."
+        name: "Entrez votre nom",
+        company: "Ex. : Yuyoung Yeonseung / nom du sous-traitant affilié",
+        location: "Parc de stockage / atelier peinture / atelier d’assemblage / zone PE",
+        content: "Ex. : La tour de service du navire 2709 E11VC dans la zone PE tremble trop, ce qui rend la circulation difficile."
       }
     },
-  
     zh: {
       title: "安全健康意见提交",
-      desc: "请填写现场危险因素或改善意见。",
+      desc: "请填写现场危险因素或改善建议。",
       name: "姓名",
       company: "公司名称",
       location: "位置",
       content: "内容",
       photo: "上传照片（可选）",
-      photoHelp: "可以上传拍摄的照片或相册中的照片。",
+      photoHelp: "可上传相机拍摄的照片或相册中的照片。",
       submit: "提交",
       submitting: "提交中...",
       success: "提交完成！",
       fail: "提交过程中发生错误。",
-      required: "位置和内容为必填项。",
-      note: "提交的意见将被审核并处理。",
+      required: "公司名称、位置和内容为必填项。",
+      note: "提交的意见将会审核并处理。",
       receiptId: "受理编号",
       placeholders: {
         name: "请输入姓名",
-        company: "例如：Yuyoung Yeonseung / 所属协力公司名称",
-        location: "堆场 / 涂装车间 / 组装车间 / PE场",
-        content: "例如：PE场2709 E11VC号船的服务塔晃动过大，导致通行困难。"
+        company: "例如：Yuyoung Yeonseung / 所属分包公司名称",
+        location: "材料场 / 涂装车间 / 组装车间 / PE场",
+        content: "例如：PE场2709 E11VC船号的服务塔晃动过大，行走困难。"
       }
     },
-  
     th: {
-      title: "การส่งข้อเสนอแนะด้านความปลอดภัยและอาชีวอนามัย",
-      desc: "กรุณากรอกอันตรายในพื้นที่ทำงานหรือข้อเสนอแนะเพื่อการปรับปรุง",
+      title: "การแจ้งข้อคิดเห็นด้านความปลอดภัยและอาชีวอนามัย",
+      desc: "กรุณากรอกความเสี่ยงในพื้นที่ปฏิบัติงานหรือข้อเสนอแนะเพื่อการปรับปรุง",
       name: "ชื่อ",
       company: "ชื่อบริษัท",
-      location: "สถานที่",
+      location: "ตำแหน่ง",
       content: "รายละเอียด",
       photo: "แนบรูปภาพ (ไม่บังคับ)",
-      photoHelp: "คุณสามารถแนบรูปที่ถ่ายจากกล้องหรือเลือกรูปจากอัลบั้มได้",
+      photoHelp: "คุณสามารถแนบรูปที่ถ่ายจากกล้องหรือเลือกจากอัลบั้มได้",
       submit: "ส่ง",
       submitting: "กำลังส่ง...",
       success: "ส่งเรียบร้อย!",
       fail: "เกิดข้อผิดพลาดระหว่างการส่ง",
-      required: "สถานที่และรายละเอียดเป็นข้อมูลที่จำเป็น",
-      note: "ข้อเสนอแนะที่ส่งมาจะได้รับการตรวจสอบและดำเนินการ",
-      receiptId: "เลขรับเรื่อง",
+      required: "ชื่อบริษัท ตำแหน่ง และรายละเอียดเป็นข้อมูลจำเป็น",
+      note: "ข้อคิดเห็นที่ส่งจะได้รับการตรวจสอบและดำเนินการ",
+      receiptId: "เลขที่รับเรื่อง",
       placeholders: {
-        name: "กรอกชื่อ",
-        company: "เช่น Yuyoung Yeonseung / ชื่อบริษัทผู้รับเหมาช่วงที่สังกัด",
+        name: "กรอกชื่อของคุณ",
+        company: "เช่น Yuyoung Yeonseung / ชื่อบริษัทผู้รับเหมาช่วง",
         location: "ลานสต็อก / อาคารพ่นสี / อาคารประกอบ / พื้นที่ PE",
-        content: "เช่น หอคอยบริการของเรือหมายเลข 2709 E11VC ในพื้นที่ PE สั่นมากเกินไป ทำให้เดินลำบาก"
+        content: "เช่น หอบริการของเรือหมายเลข 2709 E11VC ในพื้นที่ PE สั่นมาก ทำให้เดินลำบาก"
       }
     },
-  
     ar: {
-      title: "تقديم ملاحظات السلامة والصحة المهنية",
-      desc: "يرجى كتابة المخاطر الموجودة في الموقع أو مقترحات التحسين.",
+      title: "تقديم ملاحظات السلامة والصحة",
+      desc: "يرجى كتابة عوامل الخطر في الموقع أو مقترحات التحسين.",
       name: "الاسم",
       company: "اسم الشركة",
       location: "الموقع",
       content: "المحتوى",
       photo: "إرفاق صورة (اختياري)",
-      photoHelp: "يمكنك إرفاق صورة ملتقطة بالكاميرا أو صورة من الألبوم.",
+      photoHelp: "يمكنك إرفاق صورة ملتقطة بالكاميرا أو من الألبوم.",
       submit: "إرسال",
       submitting: "جارٍ الإرسال...",
       success: "تم الإرسال بنجاح!",
       fail: "حدث خطأ أثناء الإرسال.",
-      required: "الموقع والمحتوى مطلوبان.",
-      note: "سيتم مراجعة الملاحظات المقدمة ومعالجتها.",
+      required: "اسم الشركة والموقع والمحتوى مطلوبة.",
+      note: "سيتم مراجعة الملاحظات المرسلة ومعالجتها.",
       receiptId: "رقم الاستلام",
       placeholders: {
         name: "أدخل الاسم",
-        company: "مثال: Yuyoung Yeonseung / اسم شركة المقاول التابعة",
-        location: "ساحة التخزين / مبنى الطلاء / مبنى التجميع / ساحة PE",
-        content: "مثال: برج الخدمة الخاص بالسفينة 2709 E11VC في ساحة PE يهتز كثيرًا مما يجعل المشي صعبًا."
+        company: "مثال: Yuyoung Yeonseung / اسم شركة المقاول الفرعي التابعة",
+        location: "ساحة المخزون / مبنى الطلاء / مبنى التجميع / ساحة PE",
+        content: "مثال: برج الخدمة للسفينة 2709 E11VC في ساحة PE يهتز كثيرًا مما يجعل المشي صعبًا."
       }
     },
-  
     uz: {
-      title: "Mehnat xavfsizligi va sog‘liq bo‘yicha fikr yuborish",
+      title: "Mehnat xavfsizligi va sog‘liq bo‘yicha murojaat",
       desc: "Iltimos, ish joyidagi xavf omillari yoki yaxshilash takliflarini yozing.",
       name: "Ism",
-      company: "Kompaniya nomi",
+      company: "Kompaniya",
       location: "Joylashuv",
-      content: "Matn",
+      content: "Mazmuni",
       photo: "Rasm biriktirish (ixtiyoriy)",
-      photoHelp: "Kamera orqali olingan yoki albomdan tanlangan rasmni biriktirishingiz mumkin.",
+      photoHelp: "Kamera orqali olingan yoki albomdagi rasmni biriktirishingiz mumkin.",
       submit: "Yuborish",
       submitting: "Yuborilmoqda...",
-      success: "Yuborish yakunlandi!",
+      success: "Muvaffaqiyatli yuborildi!",
       fail: "Yuborish vaqtida xatolik yuz berdi.",
-      required: "Joylashuv va matn kiritilishi shart.",
-      note: "Yuborilgan fikr ko‘rib chiqilib, qayta ishlanadi.",
+      required: "Kompaniya, joylashuv va mazmuni majburiy.",
+      note: "Yuborilgan fikrlar ko‘rib chiqilib, qayta ishlanadi.",
       receiptId: "Qabul raqami",
       placeholders: {
         name: "Ismingizni kiriting",
-        company: "Masalan: Yuyoung Yeonseung / tegishli pudratchi kompaniya nomi",
-        location: "Stok maydoni / bo‘yoq sexi / yig‘uv sexi / PE maydoni",
-        content: "Masalan: PE maydonidagi 2709 E11VC kemasining xizmat minorasi juda qattiq tebranmoqda, bu esa yurishni qiyinlashtirmoqda."
+        company: "Masalan: Yuyoung Yeonseung / tegishli subpudratchi kompaniya nomi",
+        location: "Stock maydoni / bo‘yoq sexi / yig‘uv sexi / PE hududi",
+        content: "Masalan: PE hududidagi 2709 E11VC kema xizmat minorasi juda ko‘p tebranmoqda, yurish qiyinlashmoqda."
       }
     }
   };
 
+  let currentLang = "ko";
   let isSubmitting = false;
   let lastSubmitTime = 0;
- 
+
+  const titleEl = document.getElementById("title");
+  const descEl = document.getElementById("desc");
+  const nameLabel = document.getElementById("nameLabel");
+  const companyLabel = document.getElementById("companyLabel");
+  const locationLabel = document.getElementById("locationLabel");
+  const contentLabel = document.getElementById("contentLabel");
+  const photoLabel = document.getElementById("photoLabel");
+  const photoHelp = document.getElementById("photoHelp");
+  const noteEl = document.getElementById("note");
+  const submitBtn = document.getElementById("submitBtn");
+  const statusEl = document.getElementById("status");
+  const receiptIdBox = document.getElementById("receiptIdBox");
+
+  const nameInput = document.getElementById("name");
+  const companyInput = document.getElementById("company");
+  const locationInput = document.getElementById("location");
+  const contentInput = document.getElementById("content");
+
   function applyLang(lang) {
+    currentLang = lang;
     const t = i18n[lang] || i18n.ko;
-  
-    // 텍스트 변경
-    document.getElementById("title").innerText = t.title;
-    document.getElementById("desc").innerText = t.desc;
-    document.getElementById("nameLabel").innerText = t.name;
-    document.getElementById("companyLabel").innerText = t.company;
-    document.getElementById("locationLabel").innerText = t.location;
-    document.getElementById("contentLabel").innerText = t.content;
-    document.getElementById("photoLabel").innerText = t.photo;
-    document.getElementById("photoHelp").innerText = t.photoHelp;
-    document.getElementById("submitBtn").innerText = t.submit;
-    document.getElementById("note").innerText = t.note;
-  
-    // placeholder 적용
-    const nameEl = document.getElementById("name");
-    const companyEl = document.getElementById("company");
-    const locationEl = document.getElementById("location");
-    const contentEl = document.getElementById("content");
-  
-    nameEl.placeholder = t.placeholders.name;
-    companyEl.placeholder = t.placeholders.company;
-    locationEl.placeholder = t.placeholders.location;
-    contentEl.placeholder = t.placeholders.content;
-  
-    // 🔥 placeholder 길이에 따라 자동 축소
-    adjustPlaceholderSize(nameEl);
-    adjustPlaceholderSize(companyEl);
-    adjustPlaceholderSize(locationEl);
-    adjustPlaceholderSize(contentEl);
-  
-    // 🔥 RTL 처리 (아랍어)
-    if (lang === "ar") {
-      document.body.dir = "rtl";
-    } else {
-      document.body.dir = "ltr";
-    }
-  
-    // 🔥 국기 줄은 항상 LTR 유지 (안 뒤집히게)
-    const langBar = document.querySelector(".lang-bar");
-    if (langBar) {
-      langBar.style.direction = "ltr";
-    }
-  }
 
-  function updateFlags(lang) {
-    document.querySelectorAll(".flag").forEach(flag => {
-      flag.classList.toggle("active", flag.dataset.lang === lang);
+    titleEl.innerText = t.title;
+    descEl.innerText = t.desc;
+    nameLabel.innerText = t.name;
+    companyLabel.innerText = t.company;
+    locationLabel.innerText = t.location;
+    contentLabel.innerText = t.content;
+    photoLabel.innerText = t.photo;
+    photoHelp.innerText = t.photoHelp;
+    noteEl.innerText = t.note;
+    submitBtn.innerText = t.submit;
+
+    nameInput.placeholder = t.placeholders.name;
+    companyInput.placeholder = t.placeholders.company;
+    locationInput.placeholder = t.placeholders.location;
+    contentInput.placeholder = t.placeholders.content;
+
+    [nameInput, companyInput, locationInput, contentInput].forEach(adjustPlaceholderSize);
+
+    document.querySelectorAll(".flag").forEach(el => {
+      el.classList.toggle("active", el.dataset.lang === lang);
     });
+
+    if (lang === "ar") {
+      document.documentElement.dir = "rtl";
+      document.body.style.textAlign = "right";
+    } else {
+      document.documentElement.dir = "ltr";
+      document.body.style.textAlign = "";
+    }
   }
 
-  function changeLang(lang) {
-    localStorage.setItem("lang", lang);
-    applyLang(lang);
-    updateFlags(lang);
-  }
-
-  window.addEventListener("load", () => {
-    const lang = localStorage.getItem("lang") || "ko";
-    changeLang(lang);
+  document.querySelectorAll(".flag").forEach(flag => {
+    flag.addEventListener("click", () => applyLang(flag.dataset.lang));
   });
 
-  document.getElementById("form").addEventListener("submit", async function (e) {
-    e.preventDefault();
+  applyLang("ko");
 
+  document.getElementById("feedbackForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
     if (isSubmitting) return;
 
-    const lang = localStorage.getItem("lang") || "ko";
-    const t = i18n[lang] || i18n.ko;
-
-    const nameEl = document.getElementById("name");
-    const companyEl = document.getElementById("company");
-    const locationEl = document.getElementById("location");
-    const contentEl = document.getElementById("content");
-    const photoEl = document.getElementById("photo");
-    const submitBtn = document.getElementById("submitBtn");
-    const statusEl = document.getElementById("status");
-    const receiptIdBox = document.getElementById("receiptIdBox");
-
+    const t = i18n[currentLang] || i18n.ko;
     const now = Date.now();
- 
+
     if (now - lastSubmitTime < 15000) {
       statusEl.className = "status error";
-      statusEl.innerText = "잠시 후 다시 시도해주세요 (15초 제한)";
+      statusEl.innerText = "잠시 후 다시 시도해주세요. (15초 제한)";
+      receiptIdBox.innerText = "";
       return;
     }
-   
-    const name = nameEl.value.trim();
-    const company = companyEl.value.trim();
-    const location = locationEl.value.trim();
-    const content = contentEl.value.trim();
-    const photo = photoEl.files[0];
 
-    if (!location || !content) {
+    const name = nameInput.value.trim();
+    const company = companyInput.value.trim();
+    const location = locationInput.value.trim();
+    const content = contentInput.value.trim();
+    const website = document.getElementById("website").value.trim();
+    const photo = document.getElementById("photo").files[0];
+
+    if (!company || !location || !content) {
       statusEl.className = "status error";
       statusEl.innerText = t.required;
       receiptIdBox.innerText = "";
@@ -597,7 +561,7 @@
 
     isSubmitting = true;
     submitBtn.disabled = true;
-    statusEl.className = "status";
+    statusEl.className = "status info";
     statusEl.innerText = t.submitting;
     receiptIdBox.innerText = "";
 
@@ -607,11 +571,12 @@
       fd.append("company", company);
       fd.append("location", location);
       fd.append("content", content);
+      fd.append("website", website);
 
       if (photo) {
-        const photoDataUrl = await toBase64(photo);
-        fd.append("photoDataUrl", photoDataUrl);
-        fd.append("photoName", photo.name);
+        const compressed = await fileToCompressedDataURL(photo, 1280, 1280, 0.72);
+        fd.append("photoDataUrl", compressed);
+        fd.append("photoName", normalizePhotoName(photo.name));
       }
 
       const res = await fetch(WEB_APP_URL, {
@@ -621,8 +586,8 @@
 
       const json = await res.json();
 
-      if (json.success) {
-        lastSubmitTime = Date.now(); // 🔥 추가
+      if (json.success || json.ok) {
+        lastSubmitTime = Date.now();
         statusEl.className = "status success";
         statusEl.innerText = t.success;
         receiptIdBox.innerText = `${t.receiptId}: ${json.receiptId || ""}`;
@@ -642,26 +607,41 @@
     }
   });
 
-  function toBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
+  async function fileToCompressedDataURL(file, maxW = 1280, maxH = 1280, quality = 0.72) {
+    const bitmap = await createImageBitmap(file);
+
+    let width = bitmap.width;
+    let height = bitmap.height;
+
+    const ratio = Math.min(maxW / width, maxH / height, 1);
+    width = Math.round(width * ratio);
+    height = Math.round(height * ratio);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(bitmap, 0, 0, width, height);
+
+    return canvas.toDataURL("image/jpeg", quality);
+  }
+
+  function normalizePhotoName(fileName) {
+    const base = String(fileName || "photo").replace(/\.[^.]+$/, "");
+    return base + ".jpg";
   }
 
   function adjustPlaceholderSize(el) {
-   el.classList.remove("placeholder-sm", "placeholder-xs");
- 
-   const len = (el.placeholder || "").length;
- 
-   if (len >= 28) {
-     el.classList.add("placeholder-xs");
-   } else if (len >= 20) {
-     el.classList.add("placeholder-sm");
-   }
- }
+    el.classList.remove("placeholder-sm", "placeholder-xs");
+
+    const len = (el.placeholder || "").length;
+    if (len >= 28) {
+      el.classList.add("placeholder-xs");
+    } else if (len >= 20) {
+      el.classList.add("placeholder-sm");
+    }
+  }
 </script>
 </body>
 </html>
